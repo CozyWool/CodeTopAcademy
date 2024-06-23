@@ -1,0 +1,32 @@
+-- 1
+CREATE OR REPLACE FUNCTION is_palindrome(str VARCHAR)
+	RETURNS BOOL AS $$
+BEGIN
+	RETURN str = REVERSE(str);
+END;
+$$ LANGUAGE plpgsql;
+
+-- 2
+
+CREATE OR REPLACE FUNCTION is_leap_year(year int)
+	RETURNS BOOL AS $$
+BEGIN
+	RETURN (MOD(year, 400) = 0 OR MOD(year, 100) != 0) AND MOD(year, 4) = 0;
+END; 
+$$ LANGUAGE plpgsql;
+
+-- 3
+CREATE OR REPLACE FUNCTION factorial(a int)
+	RETURNS INT AS $$
+DECLARE
+	result INT = 1;
+BEGIN
+	LOOP
+		result := result * a;
+		a := a - 1;
+		EXIT WHEN a <= 1;
+	END LOOP;
+	RETURN result;
+END; 
+$$ LANGUAGE plpgsql;
+

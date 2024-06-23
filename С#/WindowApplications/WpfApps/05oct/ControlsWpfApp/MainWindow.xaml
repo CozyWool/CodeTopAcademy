@@ -1,0 +1,70 @@
+﻿<Window x:Class="ControlsWpfApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ControlsWpfApp"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid ShowGridLines="True">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Image Source="D:\Repos\CodeITStep\С#\WindowApplications\WpfApps\05oct\CanvasWpfApp\Images\Dog.jpg"
+               Stretch="Uniform"/>
+        <Border Grid.Row="0" Grid.Column="1"
+                Background="Yellow"
+                BorderBrush="Green"
+                BorderThickness="4"
+                CornerRadius="10"
+                Margin="10"
+                Height="Auto"
+                Width="Auto">
+            <MediaElement x:Name ="mediaElement"
+                      Grid.Row="0" Grid.Column="1"
+                      Source="video.mp4" 
+                      IsMuted="True"
+                          LoadedBehavior="Manual"/>
+        </Border>
+        <GroupBox Grid.Row="1" Grid.Column="0"
+                  Header="Languages"
+                  Margin="5">
+            <StackPanel Margin="5">
+                <RadioButton Content="English"/>
+                <RadioButton Content="French"/>
+                <RadioButton Content="Spanish"/>
+            </StackPanel>
+        </GroupBox>
+        <StackPanel Grid.Row="1" Grid.Column="1"
+                    Margin="5">
+            <Button Content="Play" Click="PlayButton_Click" Margin="0,20,0,0"/>
+            <Button Content="Pause" Click="PauseButton_Click"/>
+            <Button Content="Restart" Click="RestartButton_Click"/>
+        </StackPanel>
+        <!--<Expander Grid.Row="1" Grid.Column="2"
+          Header="Languages"
+          Margin="5">
+            <StackPanel Margin="5">
+                <RadioButton Content="English"/>
+                <RadioButton Content="French"/>
+                <RadioButton Content="Spanish"/>
+            </StackPanel>
+        </Expander>-->
+        <Grid Grid.Row="1" Grid.Column="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Example text"
+                       FontSize="{Binding ElementName=sliderSize, Path=Value}"/>
+            <Slider Name="sliderSize" Grid.Column="1" Value="12" Maximum="40" Minimum="12"/>
+        </Grid>
+    </Grid>
+</Window>

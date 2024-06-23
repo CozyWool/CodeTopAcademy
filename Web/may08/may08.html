@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<!--    <script>-->
+<!--        function show5Blocks(){-->
+<!--            for (i = 1; i <= 5; i++)-->
+<!--                document.write(`<h2>Header ${i}</h2>`)-->
+<!--        }-->
+<!--        show5Blocks()-->
+<!--    </script>-->
+<!--    <script>-->
+<!--        let x = prompt("x = ")-->
+<!--    </script>-->
+
+<!--    <h1>Заголовок страницы</h1>-->
+<!--    <script>-->
+<!--        document.write(`<h2>x = ${x}</h2>`)-->
+<!--    </script>-->
+<p id="Log"></p>
+<script>
+    // function incAndLog() {
+    //     x++
+    //     Log.innerHTML += `<br> increment x = ${x}`;
+    // }
+    //
+    // let x = 2;
+    // Log.innerHTML += `x = ${x}`;
+    // incAndLog(x);
+    // Log.innerHTML += `<br>x = ${x}`;
+    //
+    // function bankerRound(x) {
+    //     if (Math.round(x) % 2 === 0) {
+    //         return Math.round(x);
+    //     }
+    //     if (x < Math.round(x)) {
+    //         return Math.floor(x);
+    //     }
+    //     return Math.ceil(x);
+    // }
+    //
+    // console.log(bankerRound(2.7));
+    //
+    // function logArguments(){
+    //     console.log(arguments.length);
+    // }
+    // logArguments(1,2,3,4)
+
+    function max() {
+        if (arguments.length === 0) return undefined;
+        let maximum = arguments[0];
+        for (let i = 1; i < arguments.length; ++i) {
+            if (arguments[i] > maximum) {
+                maximum = arguments[i];
+            }
+        }
+        return maximum;
+    }
+
+    Log.innerHTML += `<h2>${max(1, 2, 3, 4, 6, "1321", "111")}</h2>`
+</script>
+
+</body>
+</html>

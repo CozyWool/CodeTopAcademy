@@ -1,0 +1,27 @@
+﻿<Window x:Class="StudentCollectionWpfApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:StudentCollectionWpfApp" 
+        d:DataContext="{d:DesignInstance Type=local:DataSource}"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid Margin = "5">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="5"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <ListBox Grid.Column="0" Grid.Row="0" ItemsSource="{Binding StudentCollection}"/>
+
+        <Button Grid.Column="0" Grid.Row="2"
+            Content="Добавить студента"
+            Name="AddStudentButton"
+            Click="AddStudentButton_Click"/>
+
+    </Grid>
+</Window>

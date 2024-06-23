@@ -1,0 +1,53 @@
+﻿@model FilteredBooksModel
+
+
+<form method="get" asp-controller="Library" asp-action="FilterBooks">
+    <div class="form-group">
+        <label>Название:</label>
+        <input class="form-control" name="name"/>
+    </div>
+    <div class="form-group">
+        <label>Автор:</label>
+        <input class="form-control" name="author"/>
+    </div>
+    <div class="form-group">
+        <label>Стиль:</label>
+        <input class="form-control" name="style"/>
+    </div>
+    <div class="form-group">
+        <label>Издатель:</label>
+        <input class="form-control" name="publisher"/>
+    </div>
+    <div class="form-group">
+        <label>Год издания:</label>
+        <input class="form-control" name="publishingYear"/>
+    </div>
+
+    <input type="submit" value="Поиск" class="btn btn-outline-primary mt-2" />
+    <a class="btn btn-outline-secondary mt-2" asp-action="Index">Назад</a>
+</form>
+
+<table class="table table-sm table-bordered table-striped mt-2">
+    <tr>
+        <th>Id</th>
+        <th>Название</th>
+        <th>Автор</th>
+        <th>Стиль</th>
+        <th>Издатель</th>
+        <th>Дата издания</th>
+    </tr>
+
+    @{
+        foreach (var book in Model.FilteredBooks)
+        {
+            <tr>
+                <td>@book.Id</td>
+                <td>@book.Name</td>
+                <td>@book.Author</td>
+                <td>@book.Style</td>
+                <td>@book.Publisher</td>
+                <td>@book.PublishingDate.ToShortDateString()</td>
+            </tr>
+        }
+    }
+</table>

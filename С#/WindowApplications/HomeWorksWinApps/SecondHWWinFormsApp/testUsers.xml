@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfUser xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<User>
+		<Surname>Петров</Surname>
+		<FatherName>Петрович</FatherName>
+		<Name>Петр</Name>
+		<PhoneNumber>+7(123)4567890</PhoneNumber>
+		<Email>1235362@gmail.com</Email>
+		<Gender>Male</Gender>
+		<BirthdayDate>2023-10-18T00:00:00</BirthdayDate>
+	</User>
+	<User>
+		<Surname>Сергеев</Surname>
+		<FatherName>Сергеевич</FatherName>
+		<Name>Сергей</Name>
+		<PhoneNumber>+7(123)4567890</PhoneNumber>
+		<Email>1235362@gmail.com</Email>
+		<Gender>Male</Gender>
+		<BirthdayDate>2023-10-18T00:00:00</BirthdayDate>
+	</User>
+	<User>
+		<Surname>Ульнова</Surname>
+		<FatherName>Петровна</FatherName>
+		<Name>Ульяна</Name>
+		<PhoneNumber>+7(123)4567890</PhoneNumber>
+		<Email>1235362@gmail.com</Email>
+		<Gender>Female</Gender>
+		<BirthdayDate>2023-10-18T00:00:00</BirthdayDate>
+	</User>
+</ArrayOfUser>

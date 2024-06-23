@@ -1,0 +1,27 @@
+﻿<Window x:Class="jan15_HW.Windows.SelectParamWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:jan15_HW.Windows"
+        mc:Ignorable="d"
+        Title="" SizeToContent="WidthAndHeight" d:DataContext="{d:DesignInstance local:SelectParamWindow }">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="200"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Name="TextBlock" Margin="2.5" />
+            <TextBox Grid.Column="1" Name="TextBox" TextChanged="TextBoxBase_OnTextChanged" Margin="2.5" />
+        </Grid>
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Click="Ok_Click" Content="OK" Name="OkButton" Margin="2.5" Width="50"/>
+            <Button Click="Cancel_Click" Content="Cancel" Margin="2.5" Width="50"/>
+        </StackPanel>
+    </Grid>
+</Window>

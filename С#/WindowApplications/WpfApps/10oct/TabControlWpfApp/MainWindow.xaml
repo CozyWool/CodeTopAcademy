@@ -1,0 +1,27 @@
+﻿<Window x:Class="TabControlWpfApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TabControlWpfApp"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <TabControl TabStripPlacement="Bottom">
+            <TabItem Header="Colors">
+                <ListBox Margin="10">
+                    <ListBoxItem>Red</ListBoxItem>
+                    <ListBoxItem>Green</ListBoxItem>
+                    <ListBoxItem>Blue</ListBoxItem>
+                </ListBox>
+            </TabItem>
+            <TabItem Header="Cities" IsSelected="True">
+                <ListBox Margin="10">
+                    <ListBoxItem>London</ListBoxItem>
+                    <ListBoxItem>Paris</ListBoxItem>
+                    <ListBoxItem>Berlin</ListBoxItem>
+                </ListBox>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>

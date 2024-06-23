@@ -1,0 +1,204 @@
+CREATE TABLE Customers
+(
+    Id INT PRIMARY KEY,
+    FirstName VARCHAR(20) NOT NULL,
+    LastName VARCHAR(20) NOT NULL,
+    AccountSum MONEY
+);
+CREATE TABLE Employees
+(
+    Id INT PRIMARY KEY,
+    FirstName VARCHAR(20) NOT NULL,
+    LastName VARCHAR(20) NOT NULL
+);
+ 
+INSERT INTO Customers VALUES
+(1, 'Ivan', 'Ivanov', 2000),
+(2, 'Vasya', 'Vasielv', 3000),
+(3, 'Mark', 'Markov', 2500),
+(4, 'Paul', 'Pasha', 4200),
+(5, 'Tim', 'Cook', 2800);
+ 
+INSERT INTO Employees VALUES
+(1, 'Homer', 'Simpson'),
+(2, 'Ivan', 'Ivanov'),
+(3, 'Mark', 'Markov'),
+(4, 'Oleg', 'Olegov');
+
+--SELECT выражение_1
+--UNION SELECT выражение_2
+--UNION SELECT выражение_n
+
+SELECT FirstName, LastName FROM Customers
+UNION ALL
+SELECT FirstName, LastName FROM Employees;
+
+SELECT CONCAT(FirstName,' ', LastName) AS CustomerName FROM Customers
+UNION
+SELECT CONCAT(FirstName,' ', LastName) AS EmployeeName FROM Employees
+ORDER BY CustomerName DESC;
+
+
+
+
+CREATE TABLE users(
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(30),
+	d_id INT
+);
+
+CREATE TABLE departments(
+	id SERIAL PRIMARY KEY,
+	name VARCHAR
+);
+
+
+INSERT INTO users(name, d_id) VALUES ('Ivan', 1), ('Vasya', 2), ('Pasha', 6), ('Anton', 2), ('Mark', 4);
+INSERT INTO departments(name) VALUES ('Department 1'), ('Department 2'), ('Department 3'), ('Department 4');
+
+
+--SELECT столбцы FROM таблица1 JOIN таблица2 ON условие1
+--INNER и OUTER - необязательные
+
+SELECT users.id, users.name, departments.name AS d_name FROM users INNER JOIN departments ON users.d_id = departments.id; -- Общая часть
+
+SELECT users.id, users.name, departments.name AS d_name FROM users LEFT OUTER JOIN departments ON users.d_id = departments.id; -- Общая часть и вся таблица1
+
+SELECT users.id, users.name, departments.name AS d_name FROM users RIGHT OUTER JOIN departments ON users.d_id = departments.id; -- Общая часть и вся таблица2
+
+SELECT users.id, users.name, departments.name AS d_name 
+FROM users
+RIGHT JOIN departments ON users.d_id = departments.id
+WHERE users.id IS null; -- все, кроме таблицы 2
+
+
+DROP TABLE departments;
+------------------------
+
+CREATE TABLE departments
+(
+    id SERIAL PRIMARY KEY,
+    building INT NOT NULL CHECK(building BETWEEN 1 AND 5),
+    name VARCHAR(100) NOT NULL CHECK(name != '') UNIQUE
+);
+
+CREATE TABLE doctors
+(
+    id SERIAL PRIMARY KEY,
+    name VARCHAR NOT NULL CHECK(name != ''),
+    surname VARCHAR NOT NULL CHECK (surname != ''),
+    premium MONEY NOT NULL CHECK(premium >= '0') DEFAULT 0,
+    salary MONEY NOT NULL CHECK(salary > '0')
+);
+
+CREATE TABLE wards
+(
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(20) NOT NULL CHECK(name != '') UNIQUE,
+    places INT NOT NULL CHECK(places >= 1),
+    department_id INT NOT NULL,
+    FOREIGN KEY (department_id) REFERENCES departments(id)
+);
+
+CREATE TABLE examinations
+(
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100) NOT NULL CHECK(name != '') UNIQUE
+);
+
+CREATE TABLE doctors_examinations
+(
+    id SERIAL PRIMARY KEY,
+    start_time TIME NOT NULL CHECK(start_time BETWEEN '08:00:00' AND '18:00:00'),
+    end_time TIME NOT NULL CHECK(end_time > start_time),
+    doctor_id INT NOT NULL,
+    examination_id INT NOT NULL,
+    ward_id INT NOT NULL,
+    FOREIGN KEY (doctor_id) REFERENCES doctors(id),
+    FOREIGN KEY (examination_id) REFERENCES examinations(id),
+    FOREIGN KEY (ward_id) REFERENCES wards(id)
+);
+
+CREATE TABLE sponsors
+(
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(100)  NOT NULL CHECK(name != '') UNIQUE
+);
+
+CREATE TABLE donations
+(
+	id SERIAL PRIMARY KEY,
+	amount INT NOT NULL CHECK(amount > 0),
+	date DATE NOT NULL CHECK(date <= CURRENT_DATE) DEFAULT CURRENT_DATE,
+	department_id INT NOT NULL,
+	sponsor_id INT NOT NULL,
+    FOREIGN KEY (department_id) REFERENCES departments(id),
+	FOREIGN KEY (sponsor_id) REFERENCES sponsors(id)
+);
+
+
+
+INSERT INTO departments (building, name) VALUES (2, 'first'), (3, 'second'), (4, 'third');
+INSERT INTO departments (building, name) VALUES (2, 'fourth'), (5, 'fifth'), (1, 'sixth');
+INSERT INTO departments (building, name) VALUES (2, 'seventh');
+
+INSERT INTO doctors (name, surname, premium, salary) VALUES ('Петр', 'Петров', 1000, 2500), ('Василий', 'Васильев', 500, 1000);
+INSERT INTO doctors (name, surname, premium, salary) VALUES ('Сергей', 'Сергеев', 2000, 10000);
+
+INSERT INTO examinations (name) VALUES ('Рентген'), ('МРТ головы'), ('ЭКГ');
+
+INSERT INTO wards (name, places, department_id) VALUES ('Палата №6', 5, 1);
+INSERT INTO wards (name, places, department_id) VALUES ('Палата №1', 25, 1);
+INSERT INTO wards (name, places, department_id) VALUES ('Палата №3', 10, 3);
+INSERT INTO wards (name, places, department_id) VALUES ('Палата №4', 15, 2);
+
+INSERT INTO doctors_examinations(start_time, end_time, doctor_id, examination_id, ward_id) VALUES ('09:00:00', '10:00:00', 1, 1, 4), ('11:00:00', '13:00:00', 2, 2, 2), ('15:00:00', '17:00:00', 3, 3, 3);
+
+INSERT INTO sponsors(name) VALUES ('Государство'), ('Фонд поддержки детей с ОВЗ'), ('Фонд поддержки больных раком'), ('Благотворительность от народа');
+
+INSERT INTO donations(amount, date, department_id, sponsor_id) VALUES
+(100000000, '2023-12-10', 1, 1), (500, '2023-12-12', 2, 4),  (100000, '2023-10-12', 2, 2), (500000, '2023-05-23', 3, 3);
+
+-- 1
+SELECT name AS "Находятся вместе с отделением 1" FROM departments
+WHERE building = (SELECT building FROM departments WHERE name = 'first') AND name != 'first';
+
+-- 2
+SELECT name AS "Находятся вместе с отделением 4 и 7" FROM departments
+WHERE building = (SELECT building FROM departments WHERE name = 'fourth') AND
+	  building = (SELECT building FROM departments WHERE name = 'seventh') AND
+      name NOT IN('fourth','seventh');
+	  
+-- 3
+SELECT name AS "Получило меньше всего пожертвований" FROM departments JOIN donations ON donations.department_id = departments.id 
+WHERE amount = (SELECT MIN(amount) FROM donations);
+
+-- 4
+SELECT surname AS "Ставка больше, чем у Петра Петрова" FROM doctors
+WHERE salary > (SELECT salary FROM doctors WHERE name = 'Петр' AND surname = 'Петров');
+
+-- 5
+SELECT name AS "Вместимость больше, чем в пал. №3" FROM wards
+WHERE places > (SELECT places FROM wards WHERE name = 'Палата №3');
+
+--6
+SELECT CONCAT(name, ' ', surname) AS "Зарплата превышает более чем на 100" FROM doctors
+WHERE salary::numeric + premium::numeric - 100 > (SELECT salary + premium FROM doctors WHERE name = 'Василий' AND surname = 'Васильев')::numeric;
+
+-- 7
+SELECT departments.name AS "Обследования проводит Петр Петров" FROM departments 
+JOIN wards ON wards.department_id = departments.id
+JOIN doctors_examinations ON doctors_examinations.ward_id = wards.id
+JOIN doctors ON doctors_examinations.doctor_id = doctors.id
+WHERE doctors.name = 'Петр' AND doctors.surname = 'Петров';
+	  
+-- 8
+SELECT sponsors.name AS "Не делали пожертв. 1 и 3 отделениям" FROM sponsors
+JOIN donations ON sponsors.id = donations.sponsor_id 
+JOIN departments ON departments.id = donations.department_id 
+WHERE departments.id NOT IN(1, 3);
+
+-- 9 
+SELECT doctors.name FROM doctors
+JOIN doctors_examinations ON doctors_examinations.doctor_id = doctors.id
+WHERE start_time >= '10:00' AND end_time <= '15:00';

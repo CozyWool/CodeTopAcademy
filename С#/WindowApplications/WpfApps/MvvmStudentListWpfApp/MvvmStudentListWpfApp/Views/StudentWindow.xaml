@@ -1,0 +1,50 @@
+﻿<Window x:Class="MvvmStudentListWpfApp.Views.StudentWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:viewModels="clr-namespace:MvvmStudentListWpfApp.ViewModels"
+        mc:Ignorable="d"
+        Title="Edit student"
+        Width="200"
+        SizeToContent="Height"
+        ResizeMode="CanMinimize"
+        WindowStartupLocation="CenterOwner" d:DataContext="{d:DesignInstance viewModels:StudentWindowViewModel}">
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="Margin" Value="5" />
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="5" />
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="Width" Value="50" />
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Name:"/>
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Surname:"/>
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Group name:"/>
+        
+        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding StudentToEdit.Name}"/>
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding StudentToEdit.Surname}"/>
+        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding StudentToEdit.GroupName}"/>
+        
+        <StackPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content = "OK" Command="{Binding OkCommand}"/>
+            <Button Content = "Cancel" Command="{Binding CancelCommand}"/>
+        </StackPanel>
+    </Grid>
+</Window>

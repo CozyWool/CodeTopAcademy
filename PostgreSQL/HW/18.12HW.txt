@@ -1,0 +1,96 @@
+-- 1
+CREATE OR REPLACE PROCEDURE hello_word(name text)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+	RAISE NOTICE 'Hello, world!';
+END; $$;
+
+-- 2
+CREATE OR REPLACE PROCEDURE cur_time()
+LANGUAGE plpgsql
+AS $$
+BEGIN
+	RAISE NOTICE '%', CURRENT_TIME;
+END; $$;
+
+-- 3
+CREATE OR REPLACE PROCEDURE cur_date()
+LANGUAGE plpgsql
+AS $$
+BEGIN
+	RAISE NOTICE '%', CURRENT_DATE;
+END; $$;
+
+-- 4
+CREATE OR REPLACE PROCEDURE sum_3(a numeric, b numeric, c numeric)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+	RAISE NOTICE '%', a + b + c;
+END; $$;
+
+-- 5
+CREATE OR REPLACE PROCEDURE avr_3(a numeric, b numeric, c numeric)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+	RAISE NOTICE '%', (a + b + c) / 3;
+END; $$;
+
+-- 6
+CREATE OR REPLACE PROCEDURE max_3(a numeric, b numeric, c numeric)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+	RAISE NOTICE '%', GREATEST(a, b ,c);
+END; $$;
+
+-- 7
+CREATE OR REPLACE PROCEDURE min_3(a numeric, b numeric, c numeric)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+	RAISE NOTICE '%', LEAST(a, b ,c);
+END; $$;
+
+-- 8
+CREATE OR REPLACE PROCEDURE repeat_char(a int, ch char(1))
+LANGUAGE plpgsql
+AS $$
+DECLARE
+	result VARCHAR = '';
+BEGIN
+	LOOP
+		a := a - 1;
+		result := result || ch;
+		EXIT WHEN a = 0;
+	END LOOP;
+	RAISE NOTICE '%', result;
+END; $$;
+
+-- 9
+CREATE OR REPLACE PROCEDURE fact(a int)
+LANGUAGE plpgsql
+AS $$
+DECLARE
+	result INT = 1;
+BEGIN
+	LOOP
+		result := result * a;
+		a := a - 1;
+		EXIT WHEN a <= 1;
+	END LOOP;
+	RAISE NOTICE '%', result;
+END; $$;
+
+-- 10
+CREATE OR REPLACE PROCEDURE calculate_power(base numeric, exponent integer)
+LANGUAGE plpgsql
+AS $$ 
+DECLARE
+	result numeric;
+BEGIN
+	result := POWER(base, exponent);
+	RAISE NOTICE '%', result;
+END; $$;

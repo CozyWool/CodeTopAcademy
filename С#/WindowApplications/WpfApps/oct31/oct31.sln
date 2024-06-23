@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookLibraryWpfApp", "BookLibraryWpfApp\BookLibraryWpfApp.csproj", "{978C9FD3-FDA0-4733-8CA5-0F749FD2EA5D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookLibraryWpfApp.Simplistics2", "BookLibraryWpfApp.Simplistic2\BookLibraryWpfApp.Simplistics2.csproj", "{E4CDC420-9E19-4AC3-A6AA-5BEFD3D71444}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookLibraryWpfApp.ViewModel", "BookLibraryWpfApp.ViewModel\BookLibraryWpfApp.ViewModel.csproj", "{59864B17-E1E0-4D38-8149-1FC5E1FDA7CA}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{978C9FD3-FDA0-4733-8CA5-0F749FD2EA5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{978C9FD3-FDA0-4733-8CA5-0F749FD2EA5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{978C9FD3-FDA0-4733-8CA5-0F749FD2EA5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{978C9FD3-FDA0-4733-8CA5-0F749FD2EA5D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E4CDC420-9E19-4AC3-A6AA-5BEFD3D71444}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E4CDC420-9E19-4AC3-A6AA-5BEFD3D71444}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E4CDC420-9E19-4AC3-A6AA-5BEFD3D71444}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E4CDC420-9E19-4AC3-A6AA-5BEFD3D71444}.Release|Any CPU.Build.0 = Release|Any CPU
+		{59864B17-E1E0-4D38-8149-1FC5E1FDA7CA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59864B17-E1E0-4D38-8149-1FC5E1FDA7CA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59864B17-E1E0-4D38-8149-1FC5E1FDA7CA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59864B17-E1E0-4D38-8149-1FC5E1FDA7CA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

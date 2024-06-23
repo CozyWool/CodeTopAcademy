@@ -1,0 +1,3 @@
+dotnet ef migrations add InitialCreate --project ..\jan26_HW.csproj
+dotnet ef migrations script --idempotent --output DatabasesScripts/GameDb.sql
+dotnet ef migrations add Added_SoldCopies_And_GameMode

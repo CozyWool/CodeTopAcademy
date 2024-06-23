@@ -1,0 +1,44 @@
+﻿<Window x:Class="BookLibraryWpfApp.ViewModel.View.SingleBookView"
+            xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+            xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+            xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+            xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+            xmlns:viewModels="clr-namespace:BookLibraryWpfApp.ViewModel.ViewModels"
+            mc:Ignorable="d"
+            Title="SingleBookView"
+            Width="450"
+            SizeToContent="Height"
+            WindowStartupLocation="CenterScreen"
+            d:DataContext="{d:DesignInstance viewModels:SingleBookViewModel}">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Name:"/>
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Author:"/>
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Publish date:"/>
+        
+        <TextBlock Grid.Row="0" Grid.Column="1" FontWeight="Bold" Text="{Binding CurrentBook.Name}"/>
+        <TextBlock Grid.Row="1" Grid.Column="1" FontWeight="Bold" Text="{Binding CurrentBook.Author}"/>
+        <TextBlock Grid.Row="2" Grid.Column="1" FontWeight="Bold" Text="{Binding CurrentBook.PublishDate}"/>
+        
+        <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0" Content="Previous" Command="{Binding PreviousCommand}"/>
+            <Button Grid.Column="1" Content="Next" Command="{Binding NextCommand}"/>
+        </Grid>
+        
+        
+    </Grid>
+</Window>

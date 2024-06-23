@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiBindingsWpfApp", "MultiBindingsWpfApp\MultiBindingsWpfApp.csproj", "{2FFDE1AD-7EEB-44BD-BE5D-BAA522832B61}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValidationRuleOne", "ValidationRuleOne\ValidationRuleOne.csproj", "{C3E87D5C-AFE9-4143-9788-CEC323919B9A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValidationRuleTwo", "ValidationRuleTwo\ValidationRuleTwo.csproj", "{28CA95C1-D08D-46C5-8194-22D02B17023B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValidationRuleThree", "ValidationRuleThree\ValidationRuleThree.csproj", "{9B0D8F3C-091A-4B8D-91ED-80E211CB7639}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValidationRuleFour", "ValidationRuleFour\ValidationRuleFour.csproj", "{17EEFDD3-08EB-4165-9163-84AF5DC499C5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ValidationRuleFive", "ValidationRuleFive\ValidationRuleFive.csproj", "{2EE5C854-9B51-475C-A849-2C9C6679DFD1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2FFDE1AD-7EEB-44BD-BE5D-BAA522832B61}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FFDE1AD-7EEB-44BD-BE5D-BAA522832B61}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FFDE1AD-7EEB-44BD-BE5D-BAA522832B61}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FFDE1AD-7EEB-44BD-BE5D-BAA522832B61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C3E87D5C-AFE9-4143-9788-CEC323919B9A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C3E87D5C-AFE9-4143-9788-CEC323919B9A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C3E87D5C-AFE9-4143-9788-CEC323919B9A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C3E87D5C-AFE9-4143-9788-CEC323919B9A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28CA95C1-D08D-46C5-8194-22D02B17023B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28CA95C1-D08D-46C5-8194-22D02B17023B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28CA95C1-D08D-46C5-8194-22D02B17023B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28CA95C1-D08D-46C5-8194-22D02B17023B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B0D8F3C-091A-4B8D-91ED-80E211CB7639}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B0D8F3C-091A-4B8D-91ED-80E211CB7639}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B0D8F3C-091A-4B8D-91ED-80E211CB7639}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B0D8F3C-091A-4B8D-91ED-80E211CB7639}.Release|Any CPU.Build.0 = Release|Any CPU
+		{17EEFDD3-08EB-4165-9163-84AF5DC499C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{17EEFDD3-08EB-4165-9163-84AF5DC499C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{17EEFDD3-08EB-4165-9163-84AF5DC499C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{17EEFDD3-08EB-4165-9163-84AF5DC499C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2EE5C854-9B51-475C-A849-2C9C6679DFD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2EE5C854-9B51-475C-A849-2C9C6679DFD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2EE5C854-9B51-475C-A849-2C9C6679DFD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2EE5C854-9B51-475C-A849-2C9C6679DFD1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

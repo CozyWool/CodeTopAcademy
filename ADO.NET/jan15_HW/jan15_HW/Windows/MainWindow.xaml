@@ -1,0 +1,97 @@
+﻿<Window x:Class="jan15_HW.Windows.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:jan15_HW.Windows"
+        mc:Ignorable="d"
+        Title="MainWindow" SizeToContent="Height" Width="850"
+        d:DataContext="{d:DesignInstance local:MainWindow }">
+    <Window.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Width" Value="350" />
+            <Setter Property="Height" Value="25" />
+            <Setter Property="Margin" Value="2.5" />
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <TextBlock Grid.Row="0" Text="Овощи и фрукты" TextAlignment="Center" FontFamily="Times New Roman"
+                   FontWeight="Bold" FontSize="24" />
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="Выберите СУБД: " Margin="5" />
+            <ComboBox Grid.Column="1" Margin="5" ItemsSource="{Binding Factories}"
+                      SelectedItem="{Binding ProviderName}" SelectionChanged="Providers_OnSelectionChanged" />
+        </Grid>
+        <WrapPanel Grid.Row="2" HorizontalAlignment="Center">
+            <Button Content="Подключиться к базе данных" Command="{Binding ConnectDatabaseCommand}" />
+            <Button Content="Отключиться от базы данных" Command="{Binding DisconnectDatabaseCommand}" />
+
+            <Button Content="Показать всю информацию" Command="{Binding ShowAllDataCommand}" />
+
+            <Button Content="Показать все названия" Command="{Binding DoQueryCommand}"
+                    CommandParameter="SELECT name AS &quot;Имя&quot; FROM vegetables_and_fruits;" />
+
+            <Button Content="Показать все цвета" Command="{Binding DoQueryCommand}"
+                    CommandParameter="SELECT DISTINCT color AS &quot;Цвет&quot; FROM vegetables_and_fruits;" />
+
+            <Button Content="Показать макс. калорийность" Command="{Binding DoQueryCommand}"
+                    CommandParameter="SELECT MAX(calorific_value) FROM vegetables_and_fruits;" />
+
+            <Button Content="Показать мин. калорийность" Command="{Binding DoQueryCommand}"
+                    CommandParameter="SELECT MIN(calorific_value) FROM vegetables_and_fruits;" />
+
+            <Button Content="Показать среднюю калорийность" Command="{Binding DoQueryCommand}"
+                    CommandParameter="SELECT ROUND(AVG(calorific_value), 2) FROM vegetables_and_fruits;" />
+
+            <Button Content="Показать кол-во овощей" Command="{Binding DoQueryCommand}"
+                    CommandParameter="SELECT COUNT(*) AS &quot;Кол-во овощей&quot; FROM vegetables_and_fruits WHERE type = 'Vegetable';" />
+
+            <Button Content="Показать кол-во фруктов" Command="{Binding DoQueryCommand}"
+                    CommandParameter="SELECT COUNT(*) AS &quot;Кол-во фруктов&quot; FROM vegetables_and_fruits WHERE type = 'Fruit';" />
+
+            <Button Content="Показать кол-во заданного цвета" Command="{Binding ShowWithSelectedColorCommand}" />
+
+            <Button Content="Показать кол-во каждого цвета" Command="{Binding DoQueryCommand}"
+                    CommandParameter="SELECT color AS &quot;Цвет&quot;, COUNT(*) AS &quot;Кол-во цвета&quot; FROM vegetables_and_fruits GROUP BY color;" />
+
+            <Button Content="Показать кол-во c &lt; калориями" Command="{Binding ShowWithCalorificValueCommand}"
+                    CommandParameter="true" />
+
+            <Button Content="Показать кол-во c &gt; калориями" Command="{Binding ShowWithCalorificValueCommand}"
+                    CommandParameter="false" />
+
+            <Button Content="Показать кол-во c калориями в указанном диапазоне"
+                    Command="{Binding ShowInCalorificRangeCommand}" />
+
+            <Button Content="Показать жёлтые или красные фрукты" Command="{Binding DoQueryCommand}"
+                    CommandParameter="SELECT * FROM vegetables_and_fruits WHERE color IN ('Yellow', 'Red');" />
+
+        </WrapPanel>
+        <DataGrid Grid.Row="3" Name="DataBaseGrid" Margin="10" ItemsSource="{Binding QueryResult}" />
+        <Grid Grid.Row="4">
+                <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="Потрачено времени: " Margin="5" />
+                <TextBox Grid.Column="1" IsReadOnly="True" Text="{Binding ElapsedTime, Mode=OneWay}" />
+        </Grid>
+        
+        <WrapPanel Grid.Row="5" HorizontalAlignment="Center" Orientation="Horizontal">
+                <Button Content="Обновить БД" Command="{Binding UpdateDbCommand}"/>
+                <Button Content="Удалить выбранную строку" Command="{Binding DeleteRowCommand}"/>
+        </WrapPanel>
+    </Grid>
+</Window>

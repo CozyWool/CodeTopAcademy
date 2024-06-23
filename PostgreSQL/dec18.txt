@@ -1,0 +1,310 @@
+CREATE TABLE customers
+(
+	id SERIAL,
+	name VARCHAR,
+	account_sum INT
+);
+
+INSERT INTO customers(name, account_sum) VALUES ('Petya', 100), ('Vanya', 1000);
+
+CREATE OR REPLACE VIEW meds_sum AS
+SELECT id, account_sum from customers;
+
+
+CREATE OR REPLACE VIEW vone AS
+SELECT * FROM customers WHERE account_sum >= 1000 WITH CHECK OPTION;
+
+INSERT INTO vone(account_sum) VALUES (100);
+
+CREATE TABLE products
+(
+	id SERIAL PRIMARY KEY,
+	name VARCHAR NOT NULL CHECK(name != ''),
+	manufacturer VARCHAR(50) NOT NULL CHECK(manufacturer != ''),
+	price INT NOT NULL CHECK(price >= 0),
+	amount INT NOT NULL
+);
+
+CREATE TABLE shops
+(
+	id SERIAL PRIMARY KEY,
+	name VARCHAR NOT NULL CHECK(name != ''),
+	address VARCHAR(50) NOT NULL CHECK(address != '')
+);
+
+CREATE TABLE customers
+(
+	id SERIAL PRIMARY KEY,
+	name VARCHAR NOT NULL CHECK(name != ''),
+	surname VARCHAR NOT NULL CHECK(surname != ''),
+	email VARCHAR(60)  CHECK(email LIKE '%@%') UNIQUE,
+	phone VARCHAR(50) CHECK(phone LIKE '+7(___)-___-__-__') UNIQUE
+);
+
+CREATE TABLE orders
+(
+	id SERIAL PRIMARY KEY,
+	price INT NOT NULL,
+	count INT DEFAULT 1,
+	customer_email VARCHAR(60) NOT NULL,
+	product_id INT NOT NULL,
+	shop_id INT NOT NULL,
+	FOREIGN KEY (customer_email) REFERENCES customers(email),
+	FOREIGN KEY (product_id) REFERENCES products(id),
+	FOREIGN KEY (shop_id) REFERENCES shops(id)
+);
+
+INSERT INTO products(name, manufacturer, price, amount) 
+VALUES ('Iphone X', 'Apple', 100000, 2),
+('Radeon RX 6600', 'AMD', 27000, 10),
+('Intel Core I5 11400f', 'Intel', 20000, 3);
+
+INSERT INTO shops(name, address) 
+VALUES ('ДНС', 'ул. Дмитрия Мендeлеева 1'),
+('М.Видео', 'ул. Пермякова 50Б'),
+('Restore:', 'ул. Дмитрия Мендeлеева 1');
+
+INSERT INTO customers(name, surname, email, phone)
+VALUES ('Пётр', 'Петров', 'ppetrov@yandex.ru', '+7(982)-776-65-43'),
+('Максим', 'Максимов', 'maximov1982@gmail.com', '+7(922)-000-14-56'),
+('Дмитрий', 'Менделеев', 'chemisty_the_best@mail.ru', '+7(912)-665-87-99');
+
+INSERT INTO orders(price, count, customer_email, shop_id, product_id) VALUES
+ 		((SELECT price FROM products WHERE name = 'Iphone X'),
+		 2,
+		 (SELECT email FROM customers WHERE name = 'Пётр' AND surname = 'Петров'),
+		 (SELECT id FROM shops WHERE name = 'Restore:'),
+		 (SELECT id FROM products WHERE name = 'Iphone X')),
+
+		((SELECT price FROM products WHERE name = 'Intel Core I5 11400f'),
+		 10,
+		 (SELECT email FROM customers WHERE name = 'Пётр' AND surname = 'Петров'),
+		 (SELECT id FROM shops WHERE name = 'ДНС'),
+		 (SELECT id FROM products WHERE name = 'Intel Core I5 11400f')),
+
+		((SELECT price FROM products WHERE name = 'Radeon RX 6600'),
+		 20,
+		 (SELECT email FROM customers WHERE name = 'Пётр' AND surname = 'Петров'),
+		 (SELECT id FROM shops WHERE name = 'М.Видео'),
+		 (SELECT id FROM products WHERE name = 'Radeon RX 6600')),
+
+
+		((SELECT price FROM products WHERE name = 'Radeon RX 6600'),
+		 1,
+		 (SELECT email FROM customers WHERE name = 'Максим' AND surname = 'Максимов'),
+		 (SELECT id FROM shops WHERE name = 'ДНС'),
+		 (SELECT id FROM products WHERE name = 'Radeon RX 6600')),
+
+		((SELECT price FROM products WHERE name = 'Intel Core I5 11400f'),
+		 5,
+		 (SELECT email FROM customers WHERE name = 'Максим' AND surname = 'Максимов'),
+		 (SELECT id FROM shops WHERE name = 'М.Видео'),
+		 (SELECT id FROM products WHERE name = 'Intel Core I5 11400f')),
+
+		((SELECT price FROM products WHERE name = 'Iphone X'),
+		 4,
+		 (SELECT email FROM customers WHERE name = 'Максим' AND surname = 'Максимов'),
+		 (SELECT id FROM shops WHERE name = 'Restore:'),
+		 (SELECT id FROM products WHERE name = 'Iphone X')),
+
+
+		((SELECT price FROM products WHERE name = 'Iphone X'),
+		 3,
+		 (SELECT email FROM customers WHERE name = 'Дмитрий' AND surname = 'Менделеев'),
+		 (SELECT id FROM shops WHERE name = 'Restore:'),
+		 (SELECT id FROM products WHERE name = 'Iphone X')),
+
+		((SELECT price FROM products WHERE name = 'Intel Core I5 11400f'),
+		 13,
+		 (SELECT email FROM customers WHERE name = 'Дмитрий' AND surname = 'Менделеев'),
+		 (SELECT id FROM shops WHERE name = 'М.Видео'),
+		 (SELECT id FROM products WHERE name = 'Intel Core I5 11400f')),
+
+		((SELECT price FROM products WHERE name = 'Radeon RX 6600'),
+		 32,
+		 (SELECT email FROM customers WHERE name = 'Дмитрий' AND surname = 'Менделеев'),
+		 (SELECT id FROM shops WHERE name = 'ДНС'),
+		 (SELECT id FROM products WHERE name = 'Radeon RX 6600'));
+
+-------------------------------------------
+-- 1
+CREATE OR REPLACE VIEW orders_sum_price_iphone AS
+SELECT SUM(price * count) AS "Сумм. стоимость заказанных Iphone X" FROM orders
+WHERE (SELECT name FROM products WHERE product_id = products.id) = 'Iphone X';
+
+-- 2
+CREATE OR REPLACE VIEW orders_min_price AS
+SELECT MIN(orders.price * orders.count) AS "Мин. цена заказа", products.name AS "Товар", shops.name AS "Магазин" 
+FROM orders
+JOIN products ON products.id = orders.product_id
+JOIN shops ON shops.id = orders.shop_id
+GROUP BY products.name, shops.name
+ORDER BY shops.name;
+
+-- 3
+CREATE OR REPLACE VIEW orders_customer_and_product_name AS
+SELECT customers.name, customers.surname, products.name AS "Название заказанного товара" FROM customers
+JOIN orders ON customers.email = orders.customer_email
+JOIN products ON products.id = orders.product_id
+ORDER BY customers.name, customers.surname;
+
+-- 4 
+CREATE OR REPLACE VIEW customers_like_ov AS
+SELECT name, surname FROM customers
+WHERE surname LIKE '%ов%';	
+
+-- 5
+SELECT * FROM orders_sum_price_iphone;
+SELECT * FROM orders_min_price;
+SELECT * FROM orders_customer_and_product_name;
+SELECT * FROM customers_like_ov;
+
+-- 6
+CREATE OR REPLACE VIEW customers_like_ov AS
+SELECT name, surname FROM customers
+WHERE surname LIKE '%ов%' WITH CHECK OPTION;	
+
+--INSERT INTO customers_like_ov(name, surname) VALUES ('Алёна', 'Петрова');
+
+
+CREATE OR REPLACE PROCEDURE insert_data(a integer, b integer)
+LANGUAGE PLPGSQL 
+AS $$
+	INSERT INTO tbl VALUES (a);
+	INSERT INTO tbl VALUES (b);
+$$;
+
+CALL insert_data(1, 2);
+
+CREATE OR REPLACE PROCEDURE calculate_sum(a integer, b integer, c integer)
+AS $$
+DECLARE
+	result int;
+BEGIN
+	result := a + b + c;
+	RAISE NOTICE 'Результат: %', result;
+END;
+$$ LANGUAGE plpgsql;
+
+CALL calculate_sum(1, 2, 3);
+
+
+CREATE OR REPLACE FUNCTION calculate_power(base numeric, exponent integer)
+RETURNS numeric
+LANGUAGE plpgsql
+AS $$ 
+DECLARE
+	result numeric;
+BEGIN
+	result := POWER(base, exponent);
+	RETURN result;
+END; $$;
+
+
+CREATE OR REPLACE PROCEDURE greets(name text)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+	RAISE NOTICE 'Hello, %!', name;
+END; $$;
+
+CALL greets('Ivan');
+
+
+--------------------
+-- 1
+CREATE OR REPLACE PROCEDURE hello_word(name text)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+	RAISE NOTICE 'Hello, world!';
+END; $$;
+
+-- 2
+CREATE OR REPLACE PROCEDURE cur_time()
+LANGUAGE plpgsql
+AS $$
+BEGIN
+	RAISE NOTICE '%', CURRENT_TIME;
+END; $$;
+
+-- 3
+CREATE OR REPLACE PROCEDURE cur_date()
+LANGUAGE plpgsql
+AS $$
+BEGIN
+	RAISE NOTICE '%', CURRENT_DATE;
+END; $$;
+
+-- 4
+CREATE OR REPLACE PROCEDURE sum_3(a numeric, b numeric, c numeric)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+	RAISE NOTICE '%', a + b + c;
+END; $$;
+
+-- 5
+CREATE OR REPLACE PROCEDURE avr_3(a numeric, b numeric, c numeric)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+	RAISE NOTICE '%', (a + b + c) / 3;
+END; $$;
+
+-- 6
+CREATE OR REPLACE PROCEDURE max_3(a numeric, b numeric, c numeric)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+	RAISE NOTICE '%', GREATEST(a, b ,c);
+END; $$;
+
+-- 7
+CREATE OR REPLACE PROCEDURE min_3(a numeric, b numeric, c numeric)
+LANGUAGE plpgsql
+AS $$
+BEGIN
+	RAISE NOTICE '%', LEAST(a, b ,c);
+END; $$;
+
+-- 8
+CREATE OR REPLACE PROCEDURE repeat_char(a int, ch char(1))
+LANGUAGE plpgsql
+AS $$
+DECLARE
+	result VARCHAR = '';
+BEGIN
+	LOOP
+		a := a - 1;
+		result := result || ch;
+		EXIT WHEN a = 0;
+	END LOOP;
+	RAISE NOTICE '%', result;
+END; $$;
+
+-- 9
+CREATE OR REPLACE PROCEDURE fact(a int)
+LANGUAGE plpgsql
+AS $$
+DECLARE
+	result INT = 1;
+BEGIN
+	LOOP
+		result := result * a;
+		a := a - 1;
+		EXIT WHEN a <= 1;
+	END LOOP;
+	RAISE NOTICE '%', result;
+END; $$;
+
+-- 10
+CREATE OR REPLACE PROCEDURE calculate_power(base numeric, exponent integer)
+LANGUAGE plpgsql
+AS $$ 
+DECLARE
+	result numeric;
+BEGIN
+	result := POWER(base, exponent);
+	RAISE NOTICE '%', result;
+END; $$;

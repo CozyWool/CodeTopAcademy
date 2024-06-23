@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34031.279
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GdiWinForms", "GdiWinForms\GdiWinForms.csproj", "{ABB59606-BBB6-4EBC-9142-9F6F04FC5797}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{ABB59606-BBB6-4EBC-9142-9F6F04FC5797}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ABB59606-BBB6-4EBC-9142-9F6F04FC5797}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ABB59606-BBB6-4EBC-9142-9F6F04FC5797}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ABB59606-BBB6-4EBC-9142-9F6F04FC5797}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {EB0B7BD8-25A9-4BFE-9BCD-68897EB8B93C}
+	EndGlobalSection
+EndGlobal

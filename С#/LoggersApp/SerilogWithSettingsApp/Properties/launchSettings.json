@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "SerilogWithSettingsApp": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIROMENT": "Development"
+      }
+    }
+  }
+}

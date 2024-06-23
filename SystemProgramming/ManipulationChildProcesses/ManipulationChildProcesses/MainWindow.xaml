@@ -1,0 +1,36 @@
+﻿<Window x:Class="ManipulationChildProcesses.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ManipulationChildProcesses"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800"
+        Closing="MainWindow_OnClosing">
+    <Grid>
+        <!--<Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Button Grid.Row="0" Content="child 1" Click="ChildOneButton_OnClick" />
+        <Button Grid.Row="1" Content="child 2" Click="ChildTwoButton_OnClick" />-->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <GroupBox Grid.Column="0">
+            <ListBox Name="StartedAssemblies" SelectionChanged="StartedAssemblies_OnSelectionChanged" />
+        </GroupBox>
+        <StackPanel Grid.Column="1" Orientation="Vertical">
+            <Button Content="Start" Name="StartButton" Click="StartButton_OnClick" />
+            <Button Content="Stop" Name="StopButton" Click="StopButton_OnClick" />
+            <Button Content="Close window" Name="CloseWindowButton" Click="CloseButton_OnClick" />
+            <Button Content="Refresh" Name="RefreshButton" Click="RefreshButton_OnClick" />
+            <Button Content="Run calc" Click="RunCalcButton_OnClick" />
+        </StackPanel>
+        <GroupBox Grid.Column="2">
+            <ListBox Name="AvailableAssemblies" SelectionChanged="AvailableAssemblies_OnSelectionChanged" />
+        </GroupBox>
+    </Grid>
+</Window>

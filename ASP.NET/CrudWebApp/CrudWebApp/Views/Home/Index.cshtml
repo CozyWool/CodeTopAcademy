@@ -1,0 +1,19 @@
+﻿@using CrudWebApp.Models;
+@model List<ProductModel>;
+
+<div>
+    @{
+        foreach (var product in Model)
+        {
+            <div>
+                <h2>Товар: @product.Name</h2>
+                <p>Цена: @product.Price</p>
+                <p>Категория: @product.CategoryId</p>
+                <a asp-controller="Home" asp-action="Edit" asp-route-id="@product.Id">Редактировать</a>
+                <a asp-controller="Home" asp-action="Delete" asp-route-id="@product.Id">Удалить</a>
+            </div>
+        }
+    }
+</div>
+
+<a asp-controller="Home" asp-action="Create">Создать</a>

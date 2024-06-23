@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TDSClientWpfApp", "TDSClientWpfApp\TDSClientWpfApp.csproj", "{7721B1F6-0066-41D9-88B3-C071435BDD39}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7721B1F6-0066-41D9-88B3-C071435BDD39}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7721B1F6-0066-41D9-88B3-C071435BDD39}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7721B1F6-0066-41D9-88B3-C071435BDD39}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7721B1F6-0066-41D9-88B3-C071435BDD39}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

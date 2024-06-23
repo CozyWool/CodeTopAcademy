@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="may27.js"></script>
+    <style>
+        /*div {*/
+        /*    width: 100px;*/
+        /*    height: 50px;*/
+        /*    background-color: green;*/
+        /*    margin: 5px;*/
+        /*}*/
+        .b1 {
+            position: relative;
+            width: 50px;
+            height: 50px;
+            background-color: red;
+        }
+
+        .b2 {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            z-index: 2;
+            width: 30px;
+            height: 30px;
+            background-color: blue;
+        }
+
+        body {
+            position: relative;
+            margin: 0;
+        }
+
+        #gun, #bullet, #aim {
+            position: absolute;
+        }
+
+        #bullet, #aim {
+            border-radius: 50%;
+        }
+
+        #gun {
+            background: navy;
+            top: 50px;
+            left: 0;
+            height: 20px;
+            width: 50px;
+        }
+
+        #bullet {
+            background: khaki;
+            top: 50px;
+            left: 30px;
+            width: 20px;
+            height: 20px;
+            z-index: -1;
+        }
+
+        #aim {
+            background: red;
+            top: 45px;
+            left: 200px;
+            width: 30px;
+            height: 30px;
+        }
+    </style>
+</head>
+<body>
+<!--<div id="block">-->
+
+<!--</div>-->
+<!--<div id="block2">-->
+
+<!--</div>-->
+
+<!--<div class="b b1" id="b1">-->
+<!--    <div class="b b2" id="b2">-->
+
+<!--    </div>-->
+<!--</div>-->
+
+<!--<script>-->
+<!--    let b1 = document.getElementById("b1");-->
+<!--    let b2 = document.getElementById("b2");-->
+<!--    b1.addEventListener("mouseenter", () => console.log("b1 mouseenter"))-->
+<!--    b1.addEventListener("mouseover", () => console.log("b1 mouseover"))-->
+<!--    b2.addEventListener("mouseenter", () => console.log("b2 mouseenter"))-->
+<!--    b2.addEventListener("mouseover", () => console.log("b2 mouseover"))-->
+
+<!--    document.addEventListener("keydown", (e) => console.log(e))-->
+<!--</script>-->
+
+<h1>Press Space</h1>
+<div id="gun"></div>
+<div id="bullet"></div>
+<div id="aim"></div>
+
+<script>
+    let bulletX = 30;
+    let onFly = false;
+
+    function moveBullet() {
+        if (onFly) {
+            bulletX += 5;
+            if (bulletX >= 200) {
+                bulletX = 30;
+                onFly = false
+            } else {
+                setTimeout(moveBullet, 50)
+            }
+            bullet.style.left = bulletX + "px";
+        }
+    }
+
+    function keyHandler(e) {
+        if (e.code === "Space" && !onFly) {
+            onFly = true
+            moveBullet()
+        }
+    }
+
+    document.addEventListener("keyup", keyHandler);
+</script>
+
+</body>
+</html>

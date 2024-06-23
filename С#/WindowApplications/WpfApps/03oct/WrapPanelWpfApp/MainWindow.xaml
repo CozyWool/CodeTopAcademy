@@ -1,0 +1,19 @@
+﻿<Window x:Class="WrapPanelWpfApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WrapPanelWpfApp"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <WrapPanel Orientation="Horizontal">
+        <Button>Кнопка 1</Button>
+        <Button>Кнопка 2</Button>
+        <Button>Кнопка 3</Button>
+        <Button>Кнопка 4</Button>
+        <Button>Кнопка 5</Button>
+        <Button>Кнопка 6</Button>
+        <Button>Кнопка 7</Button>
+        <Button>Кнопка 8</Button>
+    </WrapPanel>
+</Window>

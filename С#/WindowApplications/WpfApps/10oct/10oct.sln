@@ -1,0 +1,55 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.7.34031.279
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ListControlsWpfApp", "ListControlsWpfApp\ListControlsWpfApp.csproj", "{E20201E5-F47F-4B49-859A-3861C933C92F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TabControlWpfApp", "TabControlWpfApp\TabControlWpfApp.csproj", "{5E4C0F12-C53B-4A60-893D-D032E2E5C743}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PopupWpfApp", "PopupWpfApp\PopupWpfApp.csproj", "{FC3C1526-A120-41BC-B9AC-A69AD1D8899D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TargetObjectWpfApp", "TargetObjectWpfApp\TargetObjectWpfApp.csproj", "{EF08A0AA-94F8-4716-BFF6-6A6228AE5D3D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TargerAreaWpfApp", "TargerAreaWpfApp\TargerAreaWpfApp.csproj", "{DE79699B-5B6C-4F73-AEAD-BA0561364FB9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DirectoryViewerWpfApp", "DirectoryViewerWpfApp\DirectoryViewerWpfApp.csproj", "{470FBC3E-225F-4E6B-98ED-988B8FDC6E71}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{E20201E5-F47F-4B49-859A-3861C933C92F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E20201E5-F47F-4B49-859A-3861C933C92F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E20201E5-F47F-4B49-859A-3861C933C92F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E20201E5-F47F-4B49-859A-3861C933C92F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5E4C0F12-C53B-4A60-893D-D032E2E5C743}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E4C0F12-C53B-4A60-893D-D032E2E5C743}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E4C0F12-C53B-4A60-893D-D032E2E5C743}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E4C0F12-C53B-4A60-893D-D032E2E5C743}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FC3C1526-A120-41BC-B9AC-A69AD1D8899D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FC3C1526-A120-41BC-B9AC-A69AD1D8899D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FC3C1526-A120-41BC-B9AC-A69AD1D8899D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FC3C1526-A120-41BC-B9AC-A69AD1D8899D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF08A0AA-94F8-4716-BFF6-6A6228AE5D3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF08A0AA-94F8-4716-BFF6-6A6228AE5D3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF08A0AA-94F8-4716-BFF6-6A6228AE5D3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF08A0AA-94F8-4716-BFF6-6A6228AE5D3D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE79699B-5B6C-4F73-AEAD-BA0561364FB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE79699B-5B6C-4F73-AEAD-BA0561364FB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE79699B-5B6C-4F73-AEAD-BA0561364FB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE79699B-5B6C-4F73-AEAD-BA0561364FB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{470FBC3E-225F-4E6B-98ED-988B8FDC6E71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{470FBC3E-225F-4E6B-98ED-988B8FDC6E71}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{470FBC3E-225F-4E6B-98ED-988B8FDC6E71}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{470FBC3E-225F-4E6B-98ED-988B8FDC6E71}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5A23C40F-51EE-4173-AE2B-7FBC9E9B27E4}
+	EndGlobalSection
+EndGlobal

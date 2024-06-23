@@ -1,0 +1,49 @@
+﻿<Window x:Class="FontsWpfApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:FontsWpfApp"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid ShowGridLines="True">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Button Grid.Row="0" Grid.Column="0" 
+                Content="Text" 
+                FontFamily="Arial" 
+                FontSize="48"
+                FontWeight="Bold"/>
+        <Button Grid.Row="0" Grid.Column="1" 
+                Content="Text" 
+                FontFamily="Arial" 
+                FontSize="48"
+                FontWeight="Normal"/>
+        <Button Grid.Row="0" Grid.Column="2" 
+                Content="Text" 
+                FontFamily="Arial" 
+                FontSize="48"
+                FontStyle = "Italic"
+                FontWeight="Normal"/>
+        <Button Grid.Row="1" Grid.Column="0" 
+                Content="Text" 
+                FontFamily="Arial" 
+                FontSize="48"
+                FontWeight="Normal"
+                FontStretch ="ExtraExpanded"/>
+        <Button Grid.Row="1" Grid.Column="1" 
+                Content="Text" 
+                FontFamily="Arial" 
+                FontSize="48"
+                FontWeight="Normal"
+                FontStretch ="UltraCondensed"/>
+    </Grid>
+</Window>

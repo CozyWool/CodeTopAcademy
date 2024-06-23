@@ -1,0 +1,12 @@
+﻿<Window x:Class="BookLibraryWpfApp.Simplistics2.ListBookView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:BookLibraryWpfApp"
+        xmlns:simplistics2="clr-namespace:BookLibraryWpfApp.Simplistics2"
+        mc:Ignorable="d"
+        Title="ListBookView" Height="200" Width="500"
+        WindowStartupLocation="CenterScreen" d:DataContext="{d:DesignInstance simplistics2:Library }">
+    <ListBox Margin="5" ItemsSource="{Binding Books}" />
+</Window>

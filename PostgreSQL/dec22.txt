@@ -1,0 +1,288 @@
+-- CREATE TABLE students
+-- (
+-- 	id SERIAL PRIMARY KEY,
+-- 	name VARCHAR,
+-- 	is_head BOOL
+-- );
+
+-- INSERT INTO students(name, is_head) VALUES ('Иван', true), ('Маша', false), ('Саша', false);
+
+-- CREATE OR REPLACE FUNCTION update_head()
+-- 	RETURNS TRIGGER AS $$
+-- BEGIN
+-- 	IF NEW.is_head THEN
+-- 		UPDATE students
+-- 		SET is_head = FALSE WHERE is_head = TRUE;
+-- 	END IF;
+-- 	RETURN NEW;
+-- END;
+-- $$ LANGUAGE plpgsql;
+
+-- CREATE TRIGGER update_head_trigger
+-- BEFORE INSERT ON students
+-- FOR EACH ROW
+-- EXECUTE FUNCTION update_head();
+
+-- INSERT INTO students(name, is_head) VALUES ('Миша', True);
+
+-- CREATE OR REPLACE FUNCTION remove_student()
+-- 	RETURNS TRIGGER AS $$
+-- BEGIN
+-- 	IF OLD.is_head THEN
+-- 		UPDATE students
+-- 		SET is_head = TRUE
+-- 		WHERE id = (SELECT id FROM students ORDER BY name ASC LIMIT 1);
+-- 	END IF;
+-- 	RETURN OLD;
+-- END;
+-- $$ LANGUAGE plpgsql;
+
+-- CREATE OR REPLACE TRIGGER remove_student_trigger
+-- AFTER DELETE ON students
+-- FOR EACH ROW
+-- EXECUTE FUNCTION remove_student();
+
+-- DELETE FROM students WHERE is_head = true;
+
+----------------------
+
+DROP TABLE IF EXISTS products CASCADE;
+DROP TABLE IF EXISTS customers CASCADE;
+DROP TABLE IF EXISTS employees CASCADE;
+DROP TABLE IF EXISTS sales CASCADE;
+DROP TABLE IF EXISTS history CASCADE;
+DROP TABLE IF EXISTS archive CASCADE;
+
+CREATE TABLE IF NOT EXISTS  products (
+    id SERIAL PRIMARY KEY, 
+    name VARCHAR(255) NOT NULL,
+    category VARCHAR(50) NOT NULL,
+	amount INT NOT NULL,
+    manufacturer VARCHAR(100),
+    sale_price DECIMAL(10, 2) NOT NULL
+);
+
+--Сотрудник: ФИО сотрудника, должность, дата приёма на работу, пол, зарплата
+CREATE TABLE IF NOT EXISTS employees (
+    id SERIAL PRIMARY KEY,
+    full_name VARCHAR(255) NOT NULL,
+    position VARCHAR(50) NOT NULL,
+    hire_date DATE NOT NULL,
+    gender VARCHAR(10) NOT NULL,
+    salary DECIMAL(10, 2) NOT NULL
+);
+
+--Клиент: ФИО клиента, email, контактный телефон, пол, история заказов, процент скидки, подписан ли на почтовую рассылку
+CREATE TABLE IF NOT EXISTS customers (
+    id SERIAL PRIMARY KEY,
+    full_name VARCHAR(255) NOT NULL,
+    email VARCHAR(255),
+    phone VARCHAR(15),
+    gender VARCHAR(10) NOT NULL,
+    order_history TEXT,
+    discount_percent DECIMAL(5, 2),
+    newsletter_subscription BOOLEAN
+);
+
+--Продажи: название проданного товара, цена продажи, количество, дата продажи, информация о продавце, информация о покупателе
+CREATE TABLE IF NOT EXISTS sales (
+    id SERIAL PRIMARY KEY,
+    product_id INT REFERENCES products(id),
+    price DECIMAL(10, 2) NOT NULL,
+    amount INT NOT NULL,
+    sale_date DATE NOT NULL,
+    employee_id INT REFERENCES employees(id),
+    customer_id INT REFERENCES customers(id)
+);
+
+CREATE TABLE IF NOT EXISTS history (
+    id SERIAL PRIMARY KEY,
+    product_id INT REFERENCES products(id),
+    price DECIMAL(10, 2) NOT NULL,
+    amount INT NOT NULL,
+    sale_date DATE NOT NULL,
+    employee_id INT REFERENCES employees(id),
+    customer_id INT REFERENCES customers(id)
+);
+
+CREATE TABLE IF NOT EXISTS archive (
+    id SERIAL PRIMARY KEY, 
+    name VARCHAR(255) NOT NULL,
+    category VARCHAR(50) NOT NULL,
+	amount INT NOT NULL,
+    manufacturer VARCHAR(100),
+    sale_price DECIMAL(10, 2) NOT NULL
+);
+
+-----------------------
+-- 1
+CREATE OR REPLACE FUNCTION on_new_sale_amount_update()
+	RETURNS TRIGGER AS $$
+DECLARE
+	possible_amount INT;
+	product_amount INT;
+BEGIN
+	product_amount = (SELECT amount FROM products WHERE NEW.product_id = id);
+	possible_amount = product_amount - NEW.amount;
+	
+	IF possible_amount < 0 THEN
+		possible_amount := product_amount;
+		NEW.amount := possible_amount;
+		UPDATE products
+		SET amount = 0
+		WHERE id = NEW.product_id;
+	ELSE
+		UPDATE products
+		SET amount = amount - NEW.amount
+		WHERE id = NEW.product_id;
+	END IF;
+	RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE TRIGGER on_new_sale_amount_update_trigger
+BEFORE INSERT ON sales
+FOR EACH ROW
+EXECUTE FUNCTION on_new_sale_amount_update();
+
+
+CREATE OR REPLACE FUNCTION on_new_sale_history()
+	RETURNS TRIGGER AS $$
+BEGIN
+	INSERT INTO history(price, amount, sale_date, product_id, employee_id, customer_id) VALUES (NEW.price, NEW.amount, NEW.sale_date, NEW.product_id, NEW.employee_id, NEW.customer_id);
+	RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE TRIGGER on_new_sale_history_trigger
+BEFORE INSERT ON sales
+FOR EACH ROW
+EXECUTE FUNCTION on_new_sale_history();
+
+-- 2
+CREATE OR REPLACE FUNCTION after_new_sale()
+	RETURNS TRIGGER AS $$
+DECLARE
+	product_name VARCHAR(255);
+	product_category VARCHAR(50);
+	product_amount INT;
+	product_manufacturer VARCHAR(100);
+	product_sale_price DECIMAL(10, 2);
+BEGIN
+	product_amount = (SELECT amount FROM products WHERE NEW.product_id = id);
+	
+	IF product_amount = 0 THEN
+		product_name = (SELECT name FROM products WHERE NEW.product_id = id);
+		product_category = (SELECT category FROM products WHERE NEW.product_id = id);
+		product_manufacturer = (SELECT manufacturer FROM products WHERE NEW.product_id = id);
+		product_sale_price = (SELECT sale_price FROM products WHERE NEW.product_id = id);
+		
+		INSERT INTO archive(name, category, amount, manufacturer, sale_price) VALUES (product_name, product_category, product_amount, product_manufacturer, product_sale_price);
+	END IF;
+	RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE TRIGGER after_new_sale_trigger
+AFTER INSERT ON sales
+FOR EACH ROW
+EXECUTE FUNCTION after_new_sale();
+
+-- 3
+CREATE OR REPLACE FUNCTION before_new_customer()
+	RETURNS TRIGGER AS $$
+DECLARE
+	customer RECORD;
+BEGIN
+	FOR customer IN 
+		SELECT email, full_name FROM customers
+	LOOP
+		IF NEW.email = customer.email AND NEW.full_name = customer.full_name THEN
+			RAISE EXCEPTION 'Client must be unique!';
+		END IF;
+	END LOOP;
+	
+	RETURN NEW;
+END; 
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE TRIGGER  before_new_customer_trigger
+BEFORE INSERT ON customers
+FOR EACH ROW
+EXECUTE FUNCTION  before_new_customer();
+
+-- INSERT INTO customers (full_name, email, phone, gender, order_history, discount_percent, newsletter_subscription) VALUES
+-- ('Petr Petrov', 'ppetrov@gmail.com', '+79827765473', 'Male', '-', 0, false);
+
+-- 4
+CREATE OR REPLACE FUNCTION before_delete_customer()
+	RETURNS TRIGGER AS $$
+BEGIN
+	RAISE EXCEPTION 'Client can''t be deleted';
+	RETURN OLD;
+END; 
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE TRIGGER  before_delete_customer_trigger
+BEFORE DELETE ON customers
+FOR EACH ROW
+EXECUTE FUNCTION before_delete_customer();
+
+--DELETE FROM customers WHERE full_name = 'Petr Petrov';
+
+-- 5
+CREATE OR REPLACE FUNCTION before_delete_employee()
+	RETURNS TRIGGER AS $$
+BEGIN
+	IF OLD.hire_date < '2015-01-01' THEN
+		RAISE EXCEPTION 'Сотрудников, принятых на работу до 2015 года, нельзя удалить!';
+	END IF;
+	RETURN OLD;
+END; 
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE TRIGGER   before_delete_employee_trigger
+BEFORE DELETE ON employees
+FOR EACH ROW
+EXECUTE FUNCTION  before_delete_employee();
+
+DELETE FROM employees WHERE full_name = 'Ivan Ivanov';
+
+-- 6
+CREATE OR REPLACE FUNCTION on_new_sale_discount()
+	RETURNS TRIGGER AS $$
+BEGIN
+	
+	RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE TRIGGER on_new_sale_history_trigger
+BEFORE INSERT ON sales
+FOR EACH ROW
+EXECUTE FUNCTION on_new_sale_history();
+
+------------------------------
+
+INSERT INTO products (name, category, amount, manufacturer, sale_price) VALUES ('Iphone', 'Phones', 2, 'Apple', 10000), ('Core I5-11400f', 'CPU', 5, 'Intel', 15000),  ('X5', 'Cars', 10, 'BMW', 1000000);
+INSERT INTO employees (full_name, position, hire_date, gender, salary) VALUES ('Ivan Ivanov', 'Manager', '2014-01-08', 'Male', 50000), ('Makar Makarov', 'Employee', '2023-04-05', 'Male', 20000);
+INSERT INTO customers (full_name, email, phone, gender, order_history, discount_percent, newsletter_subscription) VALUES
+('Petr Petrov', 'ppetrov@gmail.com', '+79827765476', 'Male', '-', 5, false),
+('Masha Petrova', 'mpetrova@gmail.com', '+79827124564', 'Female', 'Iphone XR', 10, true);
+
+INSERT INTO sales (price, amount, sale_date, product_id, employee_id, customer_id) VALUES
+((SELECT sale_price FROM products WHERE name = 'X5'),
+ 2,
+ CURRENT_DATE,
+ (SELECT id FROM products WHERE name = 'X5'),
+ (SELECT id FROM employees WHERE full_name = 'Ivan Ivanov'),
+ (SELECT id FROM customers WHERE full_name = 'Masha Petrova')
+),
+((SELECT sale_price FROM products WHERE name = 'Core I5-11400f'),
+ 6,
+ CURRENT_DATE,
+ (SELECT id FROM products WHERE name = 'Core I5-11400f'),
+ (SELECT id FROM employees WHERE full_name = 'Makar Makarov'),
+ (SELECT id FROM customers WHERE full_name = 'Petr Petrov')
+);
+

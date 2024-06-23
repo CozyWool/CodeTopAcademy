@@ -1,0 +1,42 @@
+﻿@model BookModel
+
+<form method="post" asp-controller="Library" asp-action="Create">
+    <div class="form-group">
+        <label asp-for="Name">Название:</label>
+        <div>
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <input class="form-control" asp-for="Name"/>
+    </div>
+    <div class="form-group">
+        <label asp-for="Author">Автор:</label>
+        <div>
+            <span asp-validation-for="Author" class="text-danger"></span>
+        </div>
+        <input class="form-control" asp-for="Author"/>
+    </div>
+    <div class="form-group">
+        <label asp-for="Style">Стиль:</label>
+        <div>
+            <span asp-validation-for="Style" class="text-danger"></span>
+        </div>
+        <input class="form-control" asp-for="Style"/>
+    </div>
+    <div class="form-group">
+        <label asp-for="Publisher">Издатель:</label>
+        <div>
+            <span asp-validation-for="Publisher" class="text-danger"></span>
+        </div>
+        <input class="form-control" asp-for="Publisher"/>
+    </div>
+    <div class="form-group">
+        <label asp-for="PublishingDate">Дата издания:</label>
+        <div>
+            <span asp-validation-for="PublishingDate" class="text-danger"></span>
+        </div>
+        <input class="form-control" type="date" value="1800-01-01" min="1800-01-01" max="2050-12-31" asp-for="PublishingDate"/>
+    </div>
+
+    <button class="btn btn-primary mt-2" type="submit">Создать</button>
+    <a class="btn btn-secondary mt-2" asp-action="Index">Назад</a>
+</form>

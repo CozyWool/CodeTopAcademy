@@ -1,0 +1,6 @@
+Dragon,Russia,19,ach1,ach2,ach3,ach4,ach5,Бросил гранату,
+Master,Belarus,12,ach1,ach2,ach3,ach4,ach5,Бросил гранату,
+Aboba,China,15,ach1,ach2,ach3,ach4,ach5,Бросил гранату,
+CozyWool,Russia,15,ch1,ach2,ach3,ach4,ach5,Бросил гранату,
+K,R,19,Kr,Mo,
+c,r,15,d,d,g,

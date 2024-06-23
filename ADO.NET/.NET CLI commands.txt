@@ -1,0 +1,4 @@
+dotnet ef dbcontext scaffold "Host=localhost;Port=5432;Username=postgres;Password=qwerty;Database=Books;" Npgsql.EntityFrameworkCore.PostgreSQL --project ..
+
+
+dotnet ef migrations script --idempotent --project EfCoreWpf --startup-project EfCoreWpf --output Databases/BooksDb.sql;

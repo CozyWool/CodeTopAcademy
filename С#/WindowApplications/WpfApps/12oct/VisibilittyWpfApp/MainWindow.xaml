@@ -1,0 +1,27 @@
+﻿<Window x:Class="VisibilittyWpfApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:VisibilittyWpfApp"
+        mc:Ignorable="d"
+        Title="MainWindow" SizeToContent="WidthAndHeight">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Button Grid.Column="0" Grid.Row="0"
+            Visibility="Collapsed">ButtonCollapsed</Button>
+        <Button Grid.Column="0" Grid.Row="1" 
+            Visibility="Hidden">ButtonHidden</Button>
+        <Button Grid.Column="0" Grid.Row="2"
+            Visibility="Visible">ButtonVisible</Button>
+        
+    </Grid>
+</Window>

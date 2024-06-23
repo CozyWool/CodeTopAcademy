@@ -1,0 +1,6 @@
+my, 10
+bye, 10
+friend, 10
+here, 10
+elvis, 4
+lives, 10

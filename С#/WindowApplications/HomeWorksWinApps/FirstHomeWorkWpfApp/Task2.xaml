@@ -1,0 +1,85 @@
+﻿<Window x:Class="FirstHomeWorkWpfApp.Task2"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:FirstHomeWorkWpfApp"
+        xmlns:class="clr-namespace:FirstHomeWorkWpfApp.Class"
+        mc:Ignorable="d"
+        Title="Calculator"
+        Height="410" Width="260" 
+        SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterOwner" 
+        ResizeMode="CanMinimize" d:DataContext="{d:DesignInstance class:DataSource }">
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="2.5,0"/>
+            <Setter Property="Width" Value="60"/>
+            <Setter Property="Height" Value="60"/>
+            <Setter Property="FontSize" Value="25"/>
+        </Style>
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="2.5"/>
+            <Setter Property="TextAlignment" Value="Right"/>
+        </Style>
+        <Style TargetType="StackPanel">
+            <Setter Property="Margin" Value="0,2.5"/>
+            <Setter Property="Orientation" Value="Horizontal"/>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+
+        <TextBox Grid.Row="0" Text="{Binding ExpressionText, Mode=OneWay}" Foreground="Gray" IsReadOnly="True" Name="ExpressionTextBox" FontSize="15"/>
+        <TextBox Grid.Row="1" Text="{Binding Result, Mode=OneWay}" FontSize="30" FontWeight="Bold" IsReadOnly="True" Name="ResultTextBox"/>
+
+        <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <Button Content="CE" Name="CeButton" Click="Button_Click"/>
+            <Button Content="C" Name="CButton" Click="Button_Click"/>
+            <Button Content="&lt;" Name="EraseButton" Click="Button_Click"/>
+            <Button Content="/" Name="DivideButton" Click="Button_Click"/>
+        </StackPanel>
+        <StackPanel Grid.Row="3" Orientation="Horizontal">
+            <Button Content="7" Name="SevenButton" Click="Button_Click"/>
+            <Button Content="8" Name="EightButton" Click="Button_Click"/>
+            <Button Content="9" Name="NineButton" Click="Button_Click"/>
+            <Button Content="*" Name="MultiplyButton" Click="Button_Click"/>
+        </StackPanel>
+        <StackPanel Grid.Row="4" Orientation="Horizontal">
+            <Button Content="4" Name="FourButton" Click="Button_Click"/>
+            <Button Content="5" Name="FiveButton" Click="Button_Click"/>
+            <Button Content="6" Name="SixButton" Click="Button_Click"/>
+            <Button Content="-" Name="MinusButton" Click="Button_Click"/>
+        </StackPanel>
+        <StackPanel Grid.Row="5" Orientation="Horizontal">
+            <Button Content="1" Name="OneButton" Click="Button_Click"/>
+            <Button Content="2" Name="TwoButton" Click="Button_Click"/>
+            <Button Content="3" Name="ThreeButton" Click="Button_Click"/>
+            <Button Content="+" Name="PlusButton" Click="Button_Click"/>
+        </StackPanel>
+        <StackPanel Grid.Row="6" Orientation="Horizontal">
+            <Button Content="," Name="PointButton" Click="Button_Click"/>
+            <Button Content="0" Name="ZeroButton" Click="Button_Click"/>
+            <Button Content="=" Width="125" Name="ResultButton" Click="Button_Click"/>
+        </StackPanel>
+
+
+    </Grid>
+</Window>

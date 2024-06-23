@@ -1,0 +1,44 @@
+﻿<Window x:Class="DockPanelExampleWpfApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DockPanelExampleWpfApp"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <!--<DockPanel LastChildFill="True">
+        <Button DockPanel.Dock="Top" Content="Верхняя"/>
+        <Button DockPanel.Dock="Top" Content="Верхняя2"/>
+        <Button DockPanel.Dock="Bottom" Content="Нижняя"/>
+        <Button DockPanel.Dock="Left" Content="Левая"/>
+        <Button DockPanel.Dock="Right" Content="Правая"/>
+        <Button Content="Центральная"/>
+    </DockPanel>-->
+    <DockPanel LastChildFill="True">
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="File">
+                <MenuItem Header="New"/>
+                <MenuItem Header="Open"/>
+                <Separator />
+                <MenuItem Header="Close" Click="CloseMenuItem_Click"/>
+            </MenuItem>
+            <MenuItem Header="Edit">
+                <MenuItem Header="Cut"/>
+                <MenuItem Header="Copy"/>
+                <MenuItem Header="Paste"/>
+            </MenuItem>
+        </Menu>
+        <StatusBar DockPanel.Dock="Bottom" Height="30">
+            <StatusBarItem DockPanel.Dock ="Right">
+                <TextBlock x:Name="lblStatus" Margin="5,0,0,0" Text="Example text"/>
+            </StatusBarItem>
+            <StatusBarItem HorizontalContentAlignment="Stretch"
+                           VerticalContentAlignment="Stretch">
+                <ProgressBar x:Name="pgbStatus" Value="75"/>
+            </StatusBarItem>
+        </StatusBar>
+        <Grid>
+            <RichTextBox />
+        </Grid>
+    </DockPanel>
+</Window>

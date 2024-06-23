@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ThreadEventsConsoleApp", "ThreadEventsConsoleApp\ThreadEventsConsoleApp.csproj", "{D16922AC-E601-4420-968C-4005BE8077F1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwoWaySignalConsoleApp", "TwoWaySignalConsoleApp\TwoWaySignalConsoleApp.csproj", "{18E10ACC-D547-48CF-99F2-1496E6456D0F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PoolRegisterEventConsoleApp", "PoolRegisterEventConsoleApp\PoolRegisterEventConsoleApp.csproj", "{26810FF0-AA98-4FFB-B46E-D96B3A3BC955}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwoProcessEventConsoleApp", "TwoProcessEventConsoleApp\TwoProcessEventConsoleApp.csproj", "{F40FC96C-DE10-4A57-8D5C-1ECAD66E8145}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ParallelThreadsConsoleApp", "ParallelThreadsConsoleApp\ParallelThreadsConsoleApp.csproj", "{12342053-D6D2-4364-BD57-F802DCB0F381}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TimerConsoleApp", "TimerConsoleApp\TimerConsoleApp.csproj", "{122FAFCD-6AAA-4041-9CB8-28713F5F6587}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D16922AC-E601-4420-968C-4005BE8077F1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D16922AC-E601-4420-968C-4005BE8077F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D16922AC-E601-4420-968C-4005BE8077F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D16922AC-E601-4420-968C-4005BE8077F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18E10ACC-D547-48CF-99F2-1496E6456D0F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18E10ACC-D547-48CF-99F2-1496E6456D0F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18E10ACC-D547-48CF-99F2-1496E6456D0F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18E10ACC-D547-48CF-99F2-1496E6456D0F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26810FF0-AA98-4FFB-B46E-D96B3A3BC955}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26810FF0-AA98-4FFB-B46E-D96B3A3BC955}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26810FF0-AA98-4FFB-B46E-D96B3A3BC955}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26810FF0-AA98-4FFB-B46E-D96B3A3BC955}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F40FC96C-DE10-4A57-8D5C-1ECAD66E8145}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F40FC96C-DE10-4A57-8D5C-1ECAD66E8145}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F40FC96C-DE10-4A57-8D5C-1ECAD66E8145}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F40FC96C-DE10-4A57-8D5C-1ECAD66E8145}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12342053-D6D2-4364-BD57-F802DCB0F381}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12342053-D6D2-4364-BD57-F802DCB0F381}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12342053-D6D2-4364-BD57-F802DCB0F381}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12342053-D6D2-4364-BD57-F802DCB0F381}.Release|Any CPU.Build.0 = Release|Any CPU
+		{122FAFCD-6AAA-4041-9CB8-28713F5F6587}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{122FAFCD-6AAA-4041-9CB8-28713F5F6587}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{122FAFCD-6AAA-4041-9CB8-28713F5F6587}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{122FAFCD-6AAA-4041-9CB8-28713F5F6587}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

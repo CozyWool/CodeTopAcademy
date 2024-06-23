@@ -1,0 +1,26 @@
+CREATE TABLE IF NOT EXISTS books
+(
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(50),
+    author VARCHAR(30),
+    price NUMERIC(8,2),
+    amount INT
+);
+
+INSERT INTO books(title, author, price, amount)
+VALUES 
+('Война и Мир', 'Толстой Л.Н.', 400, 2), ('Мастер и Маргарита', 'Булгаков М.А.', 550, 3),
+('Евгений Онегин', 'Пушкин А.С.', 800, 5), ('Мёртвые души', 'Гоголь Н.В.', 674, 11),
+('Отцы и Дети', 'Тургенев И.С.', 1200, 4), ('Муму', 'Тургенев И.С.', 300, 20);
+
+SELECT title AS "Название", amount as "Кол-во", COUNT(amount) AS "В наличии более 5 произведений" FROM books
+WHERE amount >= 5
+GROUP BY title, amount;
+
+SELECT title AS "Название", MIN(price) AS "Мин. цена за книгу Тургенева" FROM books
+WHERE author LIKE '%Тургенев%';
+
+SELECT SUM(price * amount) AS "Сумм. стоимость книг Тургенева" FROM books
+WHERE author LIKE '%Тургенев%';
+
+SELECT ROUND(AVG(price * amount), 2) AS "Средняя стоимость за набор книг" FROM books;

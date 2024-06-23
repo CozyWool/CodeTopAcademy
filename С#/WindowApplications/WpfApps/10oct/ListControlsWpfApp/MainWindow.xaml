@@ -1,0 +1,52 @@
+﻿<Window x:Class="ListControlsWpfApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ListControlsWpfApp"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="Auto" Width="Auto" ResizeMode="CanMinimize" SizeToContent="WidthAndHeight">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <ListBox SelectionMode="Extended" Width="200">
+            <ListBoxItem>Red</ListBoxItem>
+            <ListBoxItem IsSelected="True">Green</ListBoxItem>
+            <ListBoxItem IsSelected="True">Blue</ListBoxItem>
+        </ListBox>
+        <ComboBox Grid.Column="1" Width="200">
+            <ComboBoxItem>Red</ComboBoxItem>
+            <ComboBoxItem>Green</ComboBoxItem>
+            <ComboBoxItem>Blue</ComboBoxItem>
+        </ComboBox>
+        <TreeView Grid.Column="2">
+            <TreeViewItem Header="Europe">
+                <TreeViewItem Header = "England">
+                    <TreeViewItem Header = "London"></TreeViewItem>
+                    <TreeViewItem Header = "Liverpool"></TreeViewItem>
+                </TreeViewItem>
+                <TreeViewItem Header = "France">
+                    <TreeViewItem Header = "Paris"></TreeViewItem>
+                    <TreeViewItem Header = "Marseille"></TreeViewItem>
+                </TreeViewItem>
+            </TreeViewItem>
+            <TreeViewItem Header="North America">
+                <TreeViewItem Header = "Canada" IsExpanded="True">
+                    <TreeViewItem Header = "Ottawa"></TreeViewItem>
+                    <TreeViewItem Header = "Toronto" IsSelected="True"></TreeViewItem>
+                </TreeViewItem>
+                <TreeViewItem Header = "USA">
+                    <TreeViewItem Header = "New York"></TreeViewItem>
+                    <TreeViewItem Header = "Washigton"></TreeViewItem>
+                </TreeViewItem>
+            </TreeViewItem>
+        </TreeView>
+    </Grid>
+</Window>

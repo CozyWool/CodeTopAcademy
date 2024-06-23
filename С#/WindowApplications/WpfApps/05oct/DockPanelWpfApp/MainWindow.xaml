@@ -1,0 +1,61 @@
+﻿<Window x:Class="DockPanelWpfApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DockPanelWpfApp"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid x:Name="_grid" ShowGridLines="True">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Button Grid.Row="1" Grid.Column="1" Background="Green">
+            <StackPanel Margin="5" Orientation="Horizontal">
+                <Button>Вложенная кнопка</Button>
+                <TextBox Margin="10, 0, 0, 0" Width="120">Вложенный textBox</TextBox>
+            </StackPanel>
+        </Button>
+        <Button Grid.Row="0" Grid.Column="1" Content="Ok" FontSize="25" Height="45" Width="150">
+            <Button.Background>
+                <LinearGradientBrush StartPoint="0, 0" EndPoint="1, 1">
+                    <GradientStop Color="Red" Offset="0" />
+                    <GradientStop Color="Green" Offset="0.5" />
+                    <GradientStop Color="#0000FF" Offset="1" />
+                </LinearGradientBrush>
+            </Button.Background>
+        </Button>
+        <Button Grid.Row="0" Grid.Column="2" Content="Ok" FontSize="25" Height="45" Width="150">
+            <Button.Background>
+                <RadialGradientBrush GradientOrigin="0.5,0.5">
+                    <GradientStop Color="Red" Offset="0" />
+                    <GradientStop Color="Green" Offset="0.5" />
+                    <GradientStop Color="#0000FF" Offset="1" />
+                </RadialGradientBrush>
+            </Button.Background>
+        </Button>
+        <Button Grid.Row="1" Grid.Column="0" Content="Ok" FontSize="25" Height="45" Width="150">
+            <Button.Background>
+                <ImageBrush ImageSource="D:\Repos\CodeITStep\С#\WindowApplications\WpfApps\05oct\DockPanelWpfApp\Images\Dog.jpg" />
+            </Button.Background>
+        </Button>
+        <StackPanel Grid.Row="2"
+                    Grid.Column="1"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+            <TextBox x:Name="visualTextBox" FontSize="20" Text="123" Width="150"/>
+            <TextBlock>
+                <TextBlock.Background>
+                    <VisualBrush Visual="{Binding ElementName=visualTextBox}"/>
+                </TextBlock.Background>
+            </TextBlock>
+        </StackPanel>
+    </Grid>
+</Window>

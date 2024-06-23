@@ -1,0 +1,17 @@
+CREATE TYPE type_of_food AS ENUM ('Vegetable', 'Fruit');
+
+CREATE TABLE IF NOT EXISTS vegetables_and_fruits
+(
+	id SERIAL PRIMARY KEY,
+	name VARCHAR(55) NOT NULL,
+	type type_of_food NOT NULL,
+	color varchar(50),
+	calorific_value FLOAT
+);
+
+INSERT INTO vegetables_and_fruits (name, type, color, calorific_value) VALUES 
+('Apple', 'Fruit', 'Red', 10), 
+('Cucumber', 'Vegetable', 'Green', 20),
+('Tomato', 'Vegetable', 'Red', 15),
+('Pineapple', 'Fruit', 'Yellow', 12);
+

@@ -1,0 +1,45 @@
+﻿<Window x:Class="ListWpfApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ListWpfApp"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <FlowDocument>
+        <Paragraph>Чеклист для программирования</Paragraph>
+        <List MarkerStyle="Disc">
+            <ListItem>
+                <Paragraph>Убедитесь, что все ваши переменные нужны</Paragraph>
+                <List MarkerStyle="Decimal">
+                    <ListItem>
+                        <Paragraph>
+                            Однобуквенные переменные чаще всего не имеют смысла
+                        </Paragraph>
+                    </ListItem>
+                    <ListItem>
+                        <Paragraph>
+                            <Span Foreground ="Blue">flag</Span> и
+                            <Span Foreground = "Blue">temp</Span>
+                            редко имееют значение. Старайтесь именовать в Boolean стиле.
+                            Например, isChecked
+                        </Paragraph>
+                    </ListItem>
+                </List>
+            </ListItem>
+            <ListItem>
+                <Paragraph> Не используйте цифры и строки кроме случаев, когда вы описываете константы </Paragraph>
+                <List MarkerStyle="Decimal">
+                    <ListItem>
+                        <Paragraph>
+                            Не используйте числа для измерения. Вместо этого используйте
+                            <Span Foreground="Blue">sizeof</Span>
+                            и
+                            <Span Foreground="Blue">strlen</Span>
+                        </Paragraph>
+                    </ListItem>
+                </List>
+            </ListItem>
+        </List>
+    </FlowDocument>
+</Window>

@@ -1,0 +1,33 @@
+﻿@model FilteredCarsModel
+
+
+<form method="get">
+    <div>
+        <label>Название авто:</label>
+        <input name="car"/>
+
+        <label>Категория:</label>
+        <select name="category" asp-items="Model.Categories"></select>
+
+        <input type="submit" value="Поиск" class="btn btn-outline-primary" asp-controller="Cars" asp-action="FilterCars"/>
+    </div>
+</form>
+
+<table>
+    <tr>
+        <th>Id</th>
+        <th>Название</th>
+        <th>Цена</th>
+    </tr>
+
+    @{
+        foreach (var car in Model.FilteredCars)
+        {
+            <tr>
+                <td>@car.Id</td>
+                <td>@car.Name</td>
+                <td>@car.Price</td>
+            </tr>
+        }
+    }
+</table>

@@ -1,0 +1,55 @@
+﻿<Window x:Class="ValidationRuleTwo.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:ValidationRuleTwo"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="250" Width="300" d:DataContext="{d:DesignInstance local:Person }">
+    <Window.Resources>
+        <ControlTemplate x:Key="ValidationFailed">
+            <StackPanel Orientation="Horizontal">
+                <Border BorderBrush="Red" BorderThickness="1">
+                    <AdornedElementPlaceholder />
+                </Border>
+                <TextBlock Foreground="Red" FontSize="14" FontWeight="Bold" Text="*" Margin="5,0"/>
+            </StackPanel>
+        </ControlTemplate>
+        <Style TargetType="TextBox">
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="ToolTip"
+                            Value="{Binding RelativeSource={RelativeSource Self}, Path=(Validation.Errors)[0].ErrorContent}"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition />
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Label Grid.Row="0" Grid.Column="0" Content="Введите имя" Height="30" />
+        <Label Grid.Row="1" Grid.Column="0" Content="Введите возраст" Height="30" />
+        <Label Grid.Row="2" Grid.Column="0" Content="Введите должность" Height="30" />
+
+        <TextBox Grid.Row="0" Grid.Column="1" Height="30" Margin="0,0,15,0" />
+        <TextBox Grid.Row="1" Grid.Column="1" Height="30" Margin="0,0,15,0"
+                 Validation.ErrorTemplate="{StaticResource ValidationFailed}"
+                 Validation.Error="Validation_OnError">
+            <TextBox.Text>
+                <Binding Path="Age" NotifyOnValidationError="True">
+                    <Binding.ValidationRules>
+                        <DataErrorValidationRule />
+                    </Binding.ValidationRules>
+                </Binding>
+            </TextBox.Text>
+        </TextBox>
+        <TextBox Grid.Row="2" Grid.Column="1" Height="30" Margin="0,0,15,0" />
+    </Grid>
+</Window>

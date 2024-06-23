@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "CommandLineApp": {
+      "commandName": "Project",
+      "commandLineArgs": "\"arithmetic\" OperationType=Addition FirstNumber=5 SecondNumber=6"
+    }
+  }
+}

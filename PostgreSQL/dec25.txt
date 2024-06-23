@@ -1,0 +1,247 @@
+DROP TABLE IF EXISTS barbers CASCADE;
+DROP TABLE IF EXISTS barbers_schedule CASCADE;
+DROP TABLE IF EXISTS clients CASCADE;
+DROP TABLE IF EXISTS archive CASCADE;
+
+
+CREATE TABLE IF NOT EXISTS barbers
+(
+	id SERIAL PRIMARY KEY,
+	FIO VARCHAR(150) NOT NULL,
+	gender VARCHAR(20) NOT NULL,
+	phone VARCHAR(15) NOT NULL,
+	birth_date DATE NOT NULL,
+	hiring_date DATE NOT NULL DEFAULT CURRENT_DATE,
+	position VARCHAR(20) NOT NULL,
+	price_list VARCHAR NOT NULL,
+	client_feedback VARCHAR,
+	rating INT
+);
+
+CREATE TABLE IF NOT EXISTS barbers_schedule
+(
+	id SERIAL PRIMARY KEY,
+	availability TIMESTAMP,
+	appointment TIMESTAMP,
+	barber_id INT REFERENCES barbers(id) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS clients
+(
+	id SERIAL PRIMARY KEY,
+	FIO VARCHAR(150) NOT NULL,
+	phone VARCHAR(15) NOT NULL,
+	feedback VARCHAR,
+	rating INT,
+	barber_id INT REFERENCES barbers(id) NOT NULL
+);
+
+
+CREATE TABLE IF NOT EXISTS archive
+(
+	id SERIAL PRIMARY KEY,
+	client_id INT REFERENCES clients(id) NOT NULL,
+	barber_id INT REFERENCES barbers(id) NOT NULL,
+	phone VARCHAR(15) NOT NULL,
+	date DATE NOT NULL,
+	total_price INT NOT NULL,
+	rating INT NOT NULL,
+	client_feedback VARCHAR
+);
+
+--------------------------------
+INSERT INTO barbers(FIO, gender, phone, birth_date, hiring_date, position, price_list, client_feedback, rating) VALUES
+('Петров Пётр Петрович', 'Мужской', '+79227234156', '1990-01-08', '2016-05-09', 'chief-barber', 'стрижка под "ноль": 250, мужская стрижка: 600, детская стрижка: 300, традиционное бритье бороды:400', 'Супер! Все понравилось.', 5), 
+('Максимов Максим Максимович', 'Мужской', '+79237634156', '1982-06-24', '2018-03-20', 'senior-barber', 'стрижка под "ноль": 200, мужская стрижка: 500, детская стрижка: 250', 'Нормально.', 3), 
+('Иванов Иван Иванович', 'Мужской', '+79212434168', '1999-06-12', '2017-12-31', 'senior-barber', 'стрижка под "ноль": 200, мужская стрижка: 500, детская стрижка: 250', 'В целом хорошо.', 4), 
+('Васильев Василий Васильевич', 'Мужской', '+79127236136', '2005-01-30', '2023-12-25', 'junior-barber', 'стрижка под "ноль": 100, мужская стрижка: 300, детская стрижка: 150', 'Барбер еще совсем новичок!', 1), 
+('Андреев Андрей Андреевич', 'Мужской', '+79229234854', '2003-02-16', '2023-09-09', 'junior-barber', 'стрижка под "ноль": 100, мужская стрижка: 300, детская стрижка: 150', 'Не очень понравилось.', 2);
+
+INSERT INTO barbers_schedule(availability, appointment, barber_id) VALUES
+('2023-12-26 14:00:00', '2023-12-26 14:30:00', 1),
+('2023-12-30 15:00:00', '2023-12-30 15:10:00', 1),
+('2023-12-27 12:00:00', '2023-12-27 12:30:00', 2),
+('2023-12-28 09:30:00', '2023-12-28 09:10:00', 3),
+('2024-01-10 16:00:00', '2024-01-10 16:05:00', 4),
+('2023-12-29 17:00:00', '2023-12-29 17:02:00', 5);
+
+INSERT INTO clients(FIO, phone, feedback, rating, barber_id) VALUES
+('Савельев Савелий Савельевич', '+79827746756',(SELECT client_feedback FROM barbers WHERE barbers.id = 1), (SELECT rating FROM barbers WHERE barbers.id = 1), 1),
+('Антонов Антон Антонович', '+79527676756', (SELECT client_feedback FROM barbers WHERE barbers.id = 2), (SELECT rating FROM barbers WHERE barbers.id = 2), 2),
+('Артуров Артур Артурович', '+79527656256', (SELECT client_feedback FROM barbers WHERE barbers.id = 3), (SELECT rating FROM barbers WHERE barbers.id = 3), 3),
+('Тимофеев Тимофей Тимофеевич', '+79527349756', (SELECT client_feedback FROM barbers WHERE barbers.id = 4), (SELECT rating FROM barbers WHERE barbers.id = 4), 4),
+('Никитин Никита Никитович', '+79527626756', (SELECT client_feedback FROM barbers WHERE barbers.id = 5), (SELECT rating FROM barbers WHERE barbers.id = 5), 5);
+
+INSERT INTO archive(client_id, barber_id, phone, date, total_price, rating, client_feedback) VALUES
+((SELECT id FROM clients WHERE FIO = 'Савельев Савелий Савельевич'),
+ (SELECT id FROM barbers WHERE FIO = 'Петров Пётр Петрович'),
+ (SELECT phone FROM clients WHERE FIO = 'Савельев Савелий Савельевич'),
+ (SELECT appointment FROM barbers_schedule WHERE barber_id = (SELECT id FROM barbers WHERE FIO = 'Петров Пётр Петрович') AND appointment = '2023-12-26 14:30:00'),
+ 400,
+ (SELECT rating FROM clients WHERE FIO = 'Савельев Савелий Савельевич'),
+ (SELECT feedback FROM clients WHERE FIO = 'Савельев Савелий Савельевич')),
+ 
+((SELECT id FROM clients WHERE FIO = 'Савельев Савелий Савельевич'),
+ (SELECT id FROM barbers WHERE FIO = 'Петров Пётр Петрович'),
+ (SELECT phone FROM clients WHERE FIO = 'Савельев Савелий Савельевич'),
+ (SELECT appointment FROM barbers_schedule WHERE barber_id = (SELECT id FROM barbers WHERE FIO = 'Петров Пётр Петрович') AND appointment = '2023-12-30 15:10:00'),
+ 600,
+ (SELECT rating FROM clients WHERE FIO = 'Савельев Савелий Савельевич'),
+ (SELECT feedback FROM clients WHERE FIO = 'Савельев Савелий Савельевич'));
+------------------------------------------
+
+-- 1
+CREATE OR REPLACE FUNCTION barbers_FIO() RETURNS TABLE (FIO VARCHAR(150)) AS $$
+BEGIN
+    RETURN QUERY SELECT barbers.FIO FROM barbers;
+END;
+$$ LANGUAGE plpgsql;
+
+SELECT barbers_FIO();
+
+-- 2
+CREATE OR REPLACE FUNCTION senior_barbers() RETURNS TABLE (
+	id INT,
+	FIO VARCHAR(150),
+	gender VARCHAR(20),
+	phone VARCHAR(15),
+	birth_date DATE,
+	hiring_date DATE,
+	pos VARCHAR(20),
+	price_list VARCHAR,
+	client_feedback VARCHAR,
+	rating INT)
+AS $$
+BEGIN
+    RETURN QUERY SELECT * FROM barbers WHERE barbers.position = 'senior-barber';
+END;
+$$ LANGUAGE plpgsql;
+
+SELECT * FROM senior_barbers();
+
+-- 3
+CREATE OR REPLACE FUNCTION traditional_beard_shave_barbers() RETURNS TABLE (
+	id INT,
+	FIO VARCHAR(150),
+	gender VARCHAR(20),
+	phone VARCHAR(15),
+	birth_date DATE,
+	hiring_date DATE,
+	pos VARCHAR(20),
+	price_list VARCHAR,
+	client_feedback VARCHAR,
+	rating INT)
+AS $$
+BEGIN
+    RETURN QUERY SELECT * FROM barbers WHERE barbers.price_list LIKE '%традиционное бритье бороды%';
+END;
+$$ LANGUAGE plpgsql;
+
+SELECT * FROM traditional_beard_shave_barbers();
+
+-- 4
+CREATE OR REPLACE FUNCTION service_barbers(service VARCHAR) RETURNS TABLE (
+	id INT,
+	FIO VARCHAR(150),
+	gender VARCHAR(20),
+	phone VARCHAR(15),
+	birth_date DATE,
+	hiring_date DATE,
+	pos VARCHAR(20),
+	price_list VARCHAR,
+	client_feedback VARCHAR,
+	rating INT)
+AS $$
+BEGIN
+    RETURN QUERY SELECT * FROM barbers WHERE barbers.price_list LIKE '%' || service || '%';
+END;
+$$ LANGUAGE plpgsql;
+
+SELECT * FROM service_barbers('стрижка под "ноль"');
+
+-- 5
+CREATE OR REPLACE FUNCTION barbers_working_more_than(years INT) RETURNS TABLE (
+	id INT,
+	FIO VARCHAR(150),
+	gender VARCHAR(20),
+	phone VARCHAR(15),
+	birth_date DATE,
+	hiring_date DATE,
+	pos VARCHAR(20),
+	price_list VARCHAR,
+	client_feedback VARCHAR,
+	rating INT)
+AS $$
+BEGIN
+    RETURN QUERY SELECT * FROM barbers WHERE age(CURRENT_DATE, barbers.hiring_date) > (years || ' year')::interval;
+END;
+$$ LANGUAGE plpgsql;
+
+SELECT * FROM barbers_working_more_than(6);
+
+-- 6
+CREATE OR REPLACE FUNCTION senior_and_junior_count()
+	RETURNS TABLE (Senior_barbers BIGINT, Junior_barbers BIGINT)
+AS $$
+BEGIN
+    RETURN QUERY SELECT COUNT(*), (SELECT COUNT(*) FROM barbers WHERE position = 'junior-barber') FROM barbers WHERE position = 'senior-barber';
+END;
+$$ LANGUAGE plpgsql;
+
+SELECT * FROM senior_and_junior_count();
+
+-- 7
+-- CREATE OR REPLACE FUNCTION regular_client(number_of_visits int)
+-- 	RETURNS TABLE (id INT,
+-- 	FIO VARCHAR(150),
+-- 	phone VARCHAR(15),
+-- 	feedback VARCHAR,
+-- 	rating INT,
+-- 	barber_id INT)
+-- AS $$
+-- BEGIN
+--     RETURN QUERY SELECT * FROM archive GROUP BY archive.id, client_id HAVING COUNT(*) >= number_of_visits;
+-- END;
+-- $$ LANGUAGE plpgsql;
+
+-- SELECT * FROM regular_client(2);
+
+-- 8
+CREATE OR REPLACE FUNCTION delete_chief_barber()
+	RETURNS TRIGGER AS $$
+BEGIN
+	IF (SELECT COUNT(*) FROM barbers WHERE position = 'chief-barber') < 2 THEN
+		RAISE EXCEPTION 'The only one chief-barber can''t be deleted!';
+	END IF;
+	
+    RETURN OLD;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE TRIGGER before_delete_chief_barber
+BEFORE DELETE ON barbers
+FOR EACH ROW
+EXECUTE FUNCTION delete_chief_barber();
+
+DELETE FROM barbers WHERE position = 'chief-barber';
+
+-- 9
+CREATE OR REPLACE FUNCTION insert_barber_by_age()
+	RETURNS TRIGGER AS $$
+BEGIN
+	IF AGE(CURRENT_DATE,NEW.birth_date) < (21 || 'years')::interval THEN
+		RAISE EXCEPTION 'The barber can''t be younger than 21 y.o.!';
+	END IF;
+	
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE OR REPLACE TRIGGER before_insert_barber_by_age
+BEFORE INSERT ON barbers
+FOR EACH ROW
+EXECUTE FUNCTION insert_barber_by_age();
+
+INSERT INTO barbers(FIO, gender, phone, birth_date, hiring_date, position, price_list, client_feedback, rating) VALUES
+('Аа Бб Вв', 'Мужской', '+79227234156', '2015-01-08', '2016-05-09', 'chief-barber', 'стрижка под "ноль": 250, мужская стрижка: 600, детская стрижка: 300, традиционное бритье бороды:400', 'Супер! Все понравилось.', 5); 
+

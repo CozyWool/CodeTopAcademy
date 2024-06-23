@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerWpfApp", "ServerWpfApp\ServerWpfApp.csproj", "{789716E5-1F7C-4B3F-962F-2459BF88DB08}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientWpfApp", "ClientWpfApp\ClientWpfApp.csproj", "{056C1AC5-0AE2-40F6-95C2-633B515662FF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{789716E5-1F7C-4B3F-962F-2459BF88DB08}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{789716E5-1F7C-4B3F-962F-2459BF88DB08}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{789716E5-1F7C-4B3F-962F-2459BF88DB08}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{789716E5-1F7C-4B3F-962F-2459BF88DB08}.Release|Any CPU.Build.0 = Release|Any CPU
+		{056C1AC5-0AE2-40F6-95C2-633B515662FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{056C1AC5-0AE2-40F6-95C2-633B515662FF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{056C1AC5-0AE2-40F6-95C2-633B515662FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{056C1AC5-0AE2-40F6-95C2-633B515662FF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

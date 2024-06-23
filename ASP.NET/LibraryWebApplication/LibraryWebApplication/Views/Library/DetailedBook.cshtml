@@ -1,0 +1,10 @@
+﻿@model BookModel
+
+<div>
+    <h1>@Model.Name</h1>
+    <p>Автор: <b>@Model.Author</b></p>
+    <p>Стиль: <b>@Model.Style</b></p>
+    <p>Издатель: <b>@Model.Publisher</b></p>
+    <p>Дата издания: <b>@Model.PublishingDate.ToShortDateString()</b></p>
+    <a class="btn btn-outline-primary" href="/">Вернуться на главную</a>
+</div>

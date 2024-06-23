@@ -1,0 +1,22 @@
+﻿@model CrudWebApp.Models.ProductModel
+
+<form method="post" asp-controller="Home" asp-action="Edit" asp-route-id="">
+    <div>
+        <label asp-for="Id">Id: @Model.Id</label>
+        <input asp-for="Id" value="@Model.Id" hidden/>
+    </div>
+    <div>
+        <label asp-for="Name">Название:</label>
+        <input asp-for="Name" value="@Model.Name"/>
+    </div>
+    <div>
+        <label asp-for="Price">Цена:</label>
+        <input asp-for="Price" value="@Model.Price"/>
+    </div>
+    <div>
+        <label asp-for="Price">Категория:</label>
+        <input asp-for="CategoryId" value="@Model.CategoryId"/>
+        @* <select name="category" asp-items="Model.CategoryId"></select> *@
+    </div>
+    <button type="submit">Изменить</button>
+</form>

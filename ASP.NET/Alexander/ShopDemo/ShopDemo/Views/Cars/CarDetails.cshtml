@@ -1,0 +1,45 @@
+﻿@model CarModel
+<form>
+    <div class="mb-3">
+        <img class="img-thumbnail" src="@Model.Image" alt="@Model.Name"/>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">
+            <label class="form-label">Id:</label>
+        </div>
+        <div class="col-sm-4">
+            <label class="form-label">@Model.Id</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">Название:</div>
+        <div class="col-sm-4">
+            <label class="form-label">@Model.Name</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">Описание:</div>
+        <div class="col-sm-4">
+            <label class="form-label">@Model.LongDescription</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">Цена:</div>
+        <div class="col-sm-4">
+            <label class="form-label">@Model.Price</label>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-4">Категория:</div>
+        <div class="col-sm-4">
+            <label class="form-label">@Model.CategoryName</label>
+        </div>
+    </div>
+    <div class="row form-check">
+        <input type="checkbox" class="form-check-input" checked="@Model.Available">
+        <label class="form-check-label">Доступна модель</label>
+    </div>
+    <p>
+        <a class="btn btn-warning" href="/">На главную</a>
+    </p>
+</form>

@@ -1,0 +1,28 @@
+SELECT rolname FROM pg_roles;
+
+--CREATE ROLE read_only_role;
+GRANT CONNECT ON DATABASE dec25 TO read_only_role;
+GRANT USAGE ON SCHEMA public TO read_only_role;
+GRANT SELECT ON ALL TABLES IN SCHEMA public TO read_only_role;
+-- GRANT INSERT ON ALL TABLES IN SCHEMA public TO read_only_role;
+-- GRANT UPDATE ON ALL TABLES IN SCHEMA public TO read_only_role;
+-- GRANT DELETE ON ALL TABLES IN SCHEMA public TO read_only_role;
+
+
+CREATE ROLE moderator LOGIN PASSWORD 'admin';
+-- CREATE USER moderator PASSWORD 'asfj';
+
+GRANT CONNECT ON DATABASE dec25 TO moderator;
+GRANT read_only_role TO moderator;
+
+ALTER USER moderator VALID UNTIL '2023-12-28';
+
+CREATE USER ushdfh WITH PASSWORD 'superuser';
+ALTER USER ushdfh WITH SUPERUSER;
+
+REVOKE ALL PRIVILEGES ON ALL TABLES IN SCHEMA public FROM moderator;
+REVOKE ALL PRIVILEGES ON DATABASE dec25 FROM moderator;
+DROP USER moderator;
+
+CREATE USER aboba WITH PASSWORD '152';
+GRANT 

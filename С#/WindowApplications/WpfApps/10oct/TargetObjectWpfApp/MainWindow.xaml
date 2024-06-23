@@ -1,0 +1,39 @@
+﻿<Window x:Class="TargetObjectWpfApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TargetObjectWpfApp"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="250" Width="300">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Canvas Background="Green" Margin="30, 30, 15, 30">
+            <Border Background="Yellow" 
+                    Canvas.Left="20" 
+                    Canvas.Top="20"
+                    Width="50"
+                    Height="50"/>
+            <Popup IsOpen="True">
+                <TextBlock Background="LightBlue"
+                           Padding="3"
+                           Text="Popup text"/>
+            </Popup>
+        </Canvas>
+        <Canvas Grid.Column="1" Background="Red" Margin="30, 30, 15, 30">
+            <Border x:Name="myBorder" Background="Yellow" 
+                    Canvas.Left="20" 
+                    Canvas.Top="20"
+                    Width="50"
+                    Height="50"/>
+            <Popup IsOpen="True" PlacementTarget="{Binding ElementName=myBorder}">
+                <TextBlock Background="LightBlue"
+                           Padding="3"
+                           Text="Popup text"/>
+            </Popup>
+        </Canvas>
+    </Grid>
+</Window>

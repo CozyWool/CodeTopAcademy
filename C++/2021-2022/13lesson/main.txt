@@ -1,0 +1,1 @@
+Nickname,country,age,achievements

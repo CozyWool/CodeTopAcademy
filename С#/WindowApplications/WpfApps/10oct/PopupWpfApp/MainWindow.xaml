@@ -1,0 +1,33 @@
+﻿<Window x:Class="PopupWpfApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PopupWpfApp"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+        <Button Click="Button_Click">
+            <Button.ToolTip>
+                <TextBlock Text="Подсказка"/>
+            </Button.ToolTip>   
+            <StackPanel>
+                <TextBlock>Display</TextBlock>
+                <Popup x:Name="buttonPopup" Placement="Mouse">
+                    <TextBlock Background="Gray"
+                               Foreground="White"
+                               Padding="3"
+                               Text="Всплывающая подсказка"/>
+                </Popup>
+            </StackPanel>
+        </Button>
+    </Grid>
+</Window>
