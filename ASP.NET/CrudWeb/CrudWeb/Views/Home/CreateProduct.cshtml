@@ -1,0 +1,31 @@
+﻿@using CrudWeb.Models;
+@model ProductViewModel;
+
+<form method="post" asp-controller="Home" asp-action="Create">
+    <div class="form-group">
+        <label asp-for="Product.Name">Название</label>
+        <div>
+            <span asp-validation-for="Product.Name" class="text-danger"></span>
+        </div>
+        <input class="form-control" asp-for="Product.Name"/>
+    </div>
+    <div class="form-group">
+        <label asp-for="Product.Price">Цена</label>
+        <div>
+            <span asp-validation-for="Product.Price" class="text-danger">
+            </span>
+        </div>
+        <input class="form-control" asp-for="Product.Price"/>
+    </div>
+    <div class="form-group">
+        <label asp-for="Product.CategoryId">Категория</label>
+        <div>
+            <span asp-validation-for="Product.CategoryId" class="text-danger"></span>
+        </div>
+        <select asp-for="Product.CategoryId" class="form-control" asp-items="@(new SelectList(Model?.Categories, "Id", "Name"))">
+            <option value="" disabled selected>Выберите категорию товара</option>
+        </select>
+    </div>
+    <button class="btn btn-primary mt-2" type="submit">Создать</button>
+    <a class="btn btn-secondary mt-2" asp-action="Index">Назад</a>
+</form>

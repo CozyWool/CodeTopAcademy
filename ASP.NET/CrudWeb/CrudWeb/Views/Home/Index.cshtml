@@ -1,0 +1,56 @@
+﻿@using CrudWeb.Models;
+@model ProductModel[];
+
+<table class="table table-sm table-bordered table-striped">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Название</th>
+        <th>Цена</th>
+        <th>Категория</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    @{
+        foreach (var product in Model)
+        {
+            <tr>
+                <td>@product.Id</td>
+                <td>@product.Name</td>
+                <td>@product.Price</td>
+                <td>@product.CategoryName</td>
+                <td class="text-center">
+                    <a asp-controller="Home" asp-action="GetById" asp-route-id="@product.Id"
+                       class="btn btn-sm btn-primary">
+                        Подробнее
+                    </a>
+                    <a asp-controller="Home" asp-action="Edit" asp-route-id="@product.Id"
+                       class="btn btn-sm btn-warning">
+                        Изменить
+                    </a>
+                    <a id="delete-btn" class="btn btn-sm btn-danger" onclick="deleteProduct(@product.Id)">
+                        Удалить
+                    </a>
+                </td>
+            </tr>
+        }
+    }
+    </tbody>
+</table>
+<a asp-controller="Home" asp-action="Create" class="btn btn-primary">Создать</a>
+<script type="text/javascript">
+    document.getElementById("delete-btn").addEventListener("click", deleteProduct);
+    async function deleteProduct(id) {
+        try  {
+            await fetch(`/home/` + id, {
+                method: "DELETE",
+                headers: { "Accept": "application/json", "Content-Type": "application/json" }
+            });
+            window.location.href = '/';
+        } catch (error) {
+            console.log(error);
+            alert('Произошла ошибка при удалении');
+        }
+    }
+</script>
