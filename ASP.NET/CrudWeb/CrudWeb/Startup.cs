@@ -1,13 +1,9 @@
-﻿using System;
+﻿using CrudWeb.Configuration;
 using CrudWeb.DataAccess.Contexts;
 using CrudWeb.DataAccess.Repositories;
 using CrudWeb.Services;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 namespace CrudWeb
 {
@@ -30,32 +26,37 @@ namespace CrudWeb
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
 
-            services.AddCors(options =>
+            services.AddSpaStaticFiles(config =>
             {
-                options.AddPolicy("MyPolicy", builder =>
-                {
-                    builder.AllowAnyOrigin()
-                        .AllowAnyMethod()
-                        .AllowAnyHeader();
-                });
+                var settings = configuration.GetSection(SpaSettings.Key).Get<SpaSettings>();
+                config.RootPath = settings.RootPath;
             });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors(x => x
+                //.AllowAnyOrigin()
+                .WithOrigins(GetAllowedOrigins(configuration))
+                .AllowAnyMethod()
+                .AllowAnyHeader());
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI();
+                app.UseSwaggerUI(options => options.SwaggerEndpoint("/swagger/v1/swagger.json", "v1"));
             }
 
-            app.UseCors("MyPolicy");
             app.UseStatusCodePages();
             app.UseStaticFiles();
+            if (!env.IsDevelopment())
+            {
+                app.UseSpaStaticFiles();
+            }
             app.UseRouting();
 
-            
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
@@ -63,9 +64,21 @@ namespace CrudWeb
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            
+            app.UseSpa(spa =>
+            {
+                var settings = configuration.GetSection(SpaSettings.Key).Get<SpaSettings>();
+                spa.Options.SourcePath = settings.SourcePath;
+                spa.Options.DevServerPort = 4200;
+                if (env.IsDevelopment())
+                {
+                    spa.UseAngularCliServer("start");
+                }
+            });
             Console.WriteLine($"ContentRoot Path: {env.ContentRootPath}");
             Console.WriteLine($"WebRootPath: {env.WebRootPath}");
         }
+
+        private string[] GetAllowedOrigins(IConfiguration config) =>
+            config.GetSection("AllowedOrigins").Get<string[]>() ?? [];
     }
 }

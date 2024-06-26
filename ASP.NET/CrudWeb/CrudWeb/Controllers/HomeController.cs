@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CrudWeb.Controllers
 {
+    [ApiExplorerSettings(IgnoreApi = true)]
     [Route("home")]
     public class HomeController : Controller
     {
@@ -16,6 +17,8 @@ namespace CrudWeb.Controllers
             _categories = _productsService.GetCategories();
         }
 
+        // [HttpGet("/")]
+        [Route("/")]
         [HttpGet("Index")]
         public IActionResult Index()
         {

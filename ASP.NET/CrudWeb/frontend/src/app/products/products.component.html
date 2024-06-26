@@ -1,37 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-
-<body>
-    <p *ngif="!isLoaded">
-        Дождитесь загрузки данных
-    </p>
-
-    <table class="table table-sm table-bordered table-striped" *ngif="isLoaded">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Название</th>
-                <th>Цена</th>
-                <th>Категория</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngfor="let product of products">
-                <td>{{product.Id}}</td>
-                <td>{{product.Name}}</td>
-                <td>{{product.Price}}</td>
-                <td>{{product.CategoryName}}</td>
-            </tr>
-        </tbody>
-    </table>
-
-</body>
-
-</html>
+<p *ngIf="!isLoaded">
+    Дождитесь загрузки данных
+  </p>
+  <table class="table table-sm table-bordered table-striped" *ngIf="isLoaded">
+    <thead>
+    <tr>
+        <th>Id</th>
+        <th>Название</th>
+        <th>Цена</th>
+        <th>Категория</th>
+        <th></th>
+    </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let product of products">
+            <td>{{product.id}}</td>
+            <td>{{product.name}}</td>
+            <td>{{product.price}}</td>
+            <td>{{product.categoryName}}</td>
+        </tr>
+    </tbody>
+</table>

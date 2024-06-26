@@ -18,7 +18,11 @@ export class DataService {
 
   constructor(private http: HttpClient) { }
 
-  getProducts():Observable<ProductModel[]>{
-    return this.http.get<ProductModel[]>(this.url);
+  getProducts(): Observable<ProductModel[]> {
+    return this.http.get<ProductModel[]>(this.url, {
+      headers: {
+        'Access-Control-Allow-Origin': '*'
+      }
+    });
   }
 }

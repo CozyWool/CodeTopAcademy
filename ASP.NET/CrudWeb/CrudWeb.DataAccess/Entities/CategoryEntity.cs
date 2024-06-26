@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace CrudWeb.DataAccess.Entities;
+﻿namespace CrudWeb.DataAccess.Entities;
 
 public class CategoryEntity
 {
