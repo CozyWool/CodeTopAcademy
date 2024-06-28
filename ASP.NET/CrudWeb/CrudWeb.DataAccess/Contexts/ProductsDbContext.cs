@@ -7,8 +7,8 @@ public class ProductsDbContext : DbContext
 {
     public ProductsDbContext()
     {
-        
     }
+
     public ProductsDbContext(DbContextOptions<ProductsDbContext> options)
         : base(options)
     {
@@ -53,7 +53,7 @@ public class ProductsDbContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("product_category_id_fkey");
         });
-        
+
         modelBuilder.Entity<CategoryEntity>().HasData(
             new CategoryEntity {Id = 1, Name = "Electronics"},
             new CategoryEntity {Id = 2, Name = "Books"}

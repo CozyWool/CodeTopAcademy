@@ -2,77 +2,76 @@
 using CrudWeb.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace CrudWeb.Controllers
+namespace CrudWeb.Controllers;
+
+[ApiExplorerSettings(IgnoreApi = true)]
+[Route("home")]
+public class HomeController : Controller
 {
-    [ApiExplorerSettings(IgnoreApi = true)]
-    [Route("home")]
-    public class HomeController : Controller
+    private readonly CategoryModel[] _categories;
+    private readonly IProductsService _productsService;
+
+    public HomeController(IProductsService productsService)
     {
-        private readonly IProductsService _productsService;
-        private readonly CategoryModel[] _categories;
+        _productsService = productsService;
+        _categories = _productsService.GetCategories();
+    }
 
-        public HomeController(IProductsService productsService)
-        {
-            this._productsService = productsService;
-            _categories = _productsService.GetCategories();
-        }
+    // [HttpGet("/")]
+    [Route("/")]
+    [HttpGet("Index")]
+    public IActionResult Index()
+    {
+        return View(_productsService.GetAll());
+    }
 
-        // [HttpGet("/")]
-        [Route("/")]
-        [HttpGet("Index")]
-        public IActionResult Index()
-        {
-            return View(_productsService.GetAll());
-        }
+    [HttpGet("{id:int}")]
+    public IActionResult GetById([FromRoute] int id)
+    {
+        var product = _productsService.GetById(id);
+        return View("ProductDetails", product);
+    }
 
-        [HttpGet("{id:int}")]
-        public IActionResult GetById([FromRoute] int id)
+    [HttpGet("create")]
+    public IActionResult Create()
+    {
+        var productViewModel = new ProductViewModel
         {
-            var product = _productsService.GetById(id);
-            return View("ProductDetails", product);
-        }
+            Categories = _categories
+        };
+        return View("CreateProduct", productViewModel);
+    }
 
-        [HttpGet("create")]
-        public IActionResult Create()
-        {
-            var productViewModel = new ProductViewModel
-            {
-                Categories = _categories
-            };
-            return View("CreateProduct", productViewModel);
-        }
+    [HttpPost("create")]
+    public IActionResult Create([FromForm(Name = "Product")] ProductModel productModel)
+    {
+        _productsService.Create(productModel);
+        return RedirectToAction(nameof(Index));
+    }
 
-        [HttpPost("create")]
-        public IActionResult Create([FromForm(Name = "Product")] ProductModel productModel)
+    [HttpGet("edit/{id}")]
+    public IActionResult Edit([FromRoute] int id)
+    {
+        var productModel = _productsService.GetById(id);
+        var productViewModel = new ProductViewModel
         {
-            _productsService.Create(productModel);
-            return RedirectToAction(nameof(Index));
-        }
+            Product = productModel,
+            Categories = _categories
+        };
+        return View("EditProduct", productViewModel);
+    }
 
-        [HttpGet("edit/{id}")]
-        public IActionResult Edit([FromRoute] int id)
-        {
-            var productModel = _productsService.GetById(id);
-            var productViewModel = new ProductViewModel
-            {
-                Product = productModel,
-                Categories = _categories
-            };
-            return View("EditProduct", productViewModel);
-        }
+    [HttpPost("edit")]
+    public IActionResult Edit([FromForm(Name = "Product")] ProductModel productModel)
+    {
+        _productsService.Update(productModel);
+        return RedirectToAction(nameof(Index));
+    }
 
-        [HttpPost("edit")]
-        public IActionResult Edit([FromForm(Name = "Product")] ProductModel productModel)
-        {
-            _productsService.Update(productModel);
-            return RedirectToAction(nameof(Index));
-        }
-
-        [HttpDelete("{id}")]
-        public IActionResult Delete([FromRoute] int id)
-        {
-            _productsService.Delete(id);
-            return Ok();
-        }
+    [HttpDelete("{id}")]
+    public IActionResult Delete([FromRoute] int id)
+    {
+        _productsService.Delete(id);
+        return Ok();
     }
 }
