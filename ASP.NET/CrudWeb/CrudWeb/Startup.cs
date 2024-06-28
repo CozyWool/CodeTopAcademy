@@ -26,11 +26,11 @@ namespace CrudWeb
             services.AddEndpointsApiExplorer();
             services.AddSwaggerGen();
 
-            services.AddSpaStaticFiles(config =>
-            {
-                var settings = configuration.GetSection(SpaSettings.Key).Get<SpaSettings>();
-                config.RootPath = settings.RootPath;
-            });
+            // services.AddSpaStaticFiles(config =>
+            // {
+            //     var settings = configuration.GetSection(SpaSettings.Key).Get<SpaSettings>();
+            //     config.RootPath = settings.RootPath;
+            // });
         }
 
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -64,16 +64,16 @@ namespace CrudWeb
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            app.UseSpa(spa =>
-            {
-                var settings = configuration.GetSection(SpaSettings.Key).Get<SpaSettings>();
-                spa.Options.SourcePath = settings.SourcePath;
-                spa.Options.DevServerPort = 4200;
-                if (env.IsDevelopment())
-                {
-                    spa.UseAngularCliServer("start");
-                }
-            });
+            // app.UseSpa(spa =>
+            // {
+            //     var settings = configuration.GetSection(SpaSettings.Key).Get<SpaSettings>();
+            //     spa.Options.SourcePath = settings.SourcePath;
+            //     spa.Options.DevServerPort = 4200;
+            //     if (env.IsDevelopment())
+            //     {
+            //         spa.UseAngularCliServer("start");
+            //     }
+            // });
             Console.WriteLine($"ContentRoot Path: {env.ContentRootPath}");
             Console.WriteLine($"WebRootPath: {env.WebRootPath}");
         }
