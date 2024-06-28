@@ -11,6 +11,7 @@ public class CategoryRepository : ICategoryRepository
     {
         _productsDbContext = productsDbContext;
     }
+
     public CategoryEntity[] GetAll()
     {
         return _productsDbContext.Categories.ToArray();
