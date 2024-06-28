@@ -1,8 +1,7 @@
-<p *ngIf="!isLoaded">
-    Дождитесь загрузки данных
-  </p>
-  <table class="table table-sm table-bordered table-striped" *ngIf="isLoaded">
+<h1>Список продуктов</h1>
+<table class="table table-sm table-bordered table-striped">
     <thead>
+
     <tr>
         <th>Id</th>
         <th>Название</th>
@@ -12,11 +11,78 @@
     </tr>
     </thead>
     <tbody>
-        <tr *ngFor="let product of products">
-            <td>{{product.id}}</td>
-            <td>{{product.name}}</td>
-            <td>{{product.price}}</td>
-            <td>{{product.categoryName}}</td>
-        </tr>
+        @for (product of products; track $index) {
+            <tr>
+                <ng-template [ngTemplateOutlet]="loadTemplate(product)"
+                             [ngTemplateOutletContext]="{ $implicit: product}">
+                </ng-template>
+            </tr>
+        }
     </tbody>
+
 </table>
+<button class="btn btn-primary" (click)="addProduct()">Добавить</button>
+<div class="text-center">{{ statusMessage }}</div>
+
+<div *ngIf="detailedProduct !== null">
+    <h2 class="text-center">Детали продукта</h2>
+    <form>
+        <div class="form-group">
+            <label>Id</label>
+            <input class="form-control" value="{{detailedProduct!.id}}" readonly disabled/>
+        </div>
+        <div class="form-group">
+            <label>Название</label>
+            <input class="form-control" value="{{detailedProduct!.name}}" readonly/>
+        </div>
+        <div class="form-group">
+            <label>Цена</label>
+            <input class="form-control" type="number" value="{{detailedProduct!.price}}" readonly/>
+        </div>
+        <div class="form-group">
+            <label>Категория</label>
+            <input class="form-control" value="{{detailedProduct!.categoryName}}" readonly/>
+        </div>
+        <button type="button" class="btn btn-outline-dark mt-2" (click)="detailedProduct=null">Закрыть</button>
+    </form>
+</div>
+
+
+<!--шаблон для чтения-->
+<ng-template #readOnlyTemplate let-product>
+    <td>{{ product.id }}</td>
+    <td>{{ product.name }}</td>
+    <td>{{ product.price }}</td>
+    <td>{{ product.categoryName }}</td>
+    <td>
+        <button class="btn btn-outline-dark btn-sm" (click)="detailProduct(product.id)">Подробнее</button>
+        <button class="btn btn-primary btn-sm" (click)="editProduct(product)">Изменить</button>
+        <button class="btn btn-danger btn-sm" (click)="deleteProduct(product)">Удалить</button>
+    </td>
+</ng-template>
+
+<!--шаблон для редактирования-->
+<ng-template #editTemplate>
+    <td>
+        <input [(ngModel)]="editedProduct!.id" readonly disabled/>
+    </td>
+    <td>
+        <input [(ngModel)]="editedProduct!.name"/>
+    </td>
+    <td>
+        <input type="number" [(ngModel)]="editedProduct!.price"/>
+    </td>
+
+    <td>
+        <select [(ngModel)]="editedProduct!.categoryId">
+            <option *ngFor="let category of categories" [ngValue]="category.id">
+                {{ category.name }}
+            </option>
+        </select>
+    </td>
+    <td>
+        <button class="btn btn-sm btn-primary" (click)="saveProduct()">Сохранить</button>
+        <button class="btn btn-sm btn-secondary" (click)="cancel()">Отмена</button>
+    </td>
+</ng-template>
+

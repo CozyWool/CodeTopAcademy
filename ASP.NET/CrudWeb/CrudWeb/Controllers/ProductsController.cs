@@ -1,3 +1,4 @@
+using CrudWeb.DataAccess.Repositories;
 using CrudWeb.Models;
 using CrudWeb.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -20,6 +21,11 @@ namespace CrudWeb.Controllers
         public Task<ProductModel[]> GetAll()
         {
             return Task.FromResult(_productsService.GetAll());
+        }
+        [HttpGet("categories")]
+        public Task<CategoryModel[]> GetAllCategories()
+        {
+            return Task.FromResult(_productsService.GetCategories());
         }
 
         [HttpGet("{id:int}")]

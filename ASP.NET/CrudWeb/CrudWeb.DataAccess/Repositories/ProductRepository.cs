@@ -45,6 +45,7 @@ namespace CrudWeb.DataAccess.Repositories
             return productsDbContext
                                     .Products
                                     .Include(x => x.Category)
+                                    .OrderBy(x => x.Id)
                                     .ToArray();
         }
     }
