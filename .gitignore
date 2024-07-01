@@ -280,3 +280,5 @@ Thumbs.db
 *.rar
 *.zip
 *.7z
+.angular/
+/ASP.NET/CrudWeb/frontend/.angular
