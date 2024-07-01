@@ -1,0 +1,31 @@
+﻿@model CrudWeb.Models.ProductModel;
+
+<form method="post" asp-controller="Home" asp-action="Create">
+    <div class="form-group">
+        <label asp-for="Id"></label>
+        <input class="form-control" asp-for="Id" readonly/>
+    </div>
+    <div class="form-group">
+        <label asp-for="Name">Название</label>
+        <div>
+            <span asp-validation-for="Name" class="text-danger"></span>
+        </div>
+        <input class="form-control" asp-for="Name" readonly/>
+    </div>
+    <div class="form-group">
+        <label asp-for="Price">Цена</label>
+        <div>
+            <span asp-validation-for="Price" class="text-danger">
+            </span>
+        </div>
+        <input class="form-control" asp-for="Price" readonly/>
+    </div>
+    <div class="form-group">
+        <label asp-for="CategoryName">Категория</label>
+        <div>
+            <span asp-validation-for="CategoryName" class="text-danger"></span>
+        </div>
+        <input class="form-control" asp-for="CategoryName" readonly/>
+    </div>
+    <a class="btn btn-secondary mt-2" asp-action="Index">Назад</a>
+</form>
