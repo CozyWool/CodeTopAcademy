@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  db:
+    container_name: product-db
+    image: postgres:latest
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - "5434:5432"
+  pgadmin:
+    container_name: pgadmin
+    image: dpage/pgadmin4:latest
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=${PGADMIN_EMAIL}
+      - PGADMIN_DEFAULT_PASSWORD=${PGADMIN_PASSWORD}
+    depends_on:
+      - db
+    ports:
+      - "5052:80"
+    restart: always
+  backend:
+    container_name: demo-docker-web
+    build:
+#      context: ./DemoDockerWeb
+#      dockerfile: ./DemoDockerWeb/Dockerfile
+      context: ./DemoDockerWeb
+      dockerfile: ../docker_files/backend.DockerFile
+    depends_on:
+      - db
+    ports:
+      - "5000:8080"
