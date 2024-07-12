@@ -4,12 +4,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LibraryWebApplication.DataAccess.Contexts;
 
-public partial class LibraryDbContext : DbContext
+public class LibraryDbContext : DbContext
 {
-
-    public LibraryDbContext()
-    {
-    }
 
     public LibraryDbContext(DbContextOptions<LibraryDbContext> options)
         : base(options)
@@ -23,6 +19,4 @@ public partial class LibraryDbContext : DbContext
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(BookConfiguration).Assembly);
     }
-
-    partial void OnModelCreatingPartial(ModelBuilder modelBuilder);
 }

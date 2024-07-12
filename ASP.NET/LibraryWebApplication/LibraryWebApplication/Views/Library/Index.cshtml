@@ -1,67 +1,62 @@
-﻿@model BookModel[]
+﻿@using LibraryWebApplication.Controllers
+@model IndexViewModel
+@addTagHelper *, LibraryWebApplication
 
 <div class="container text-center">
     <h1 class="align-center">Библиотека</h1>
 </div>
 
-@* <div class="row mt-5 mb-5"> *@
-@*     @{ *@
-@*         foreach (var book in Model) *@
-@*         { *@
-@*             <div class="card"> *@
-@*                 <div class="card-body"> *@
-@*                     <a class="link " asp-controller="Library" asp-action="GetById" asp-route-id="@book.Id"> *@
-@*                         &quot;@book.Name&quot; *@
-@*                     </a> *@
-@*                     - *@
-@*                     <b>@book.Author</b> *@
-@*                     <a asp-controller="Library" asp-action="Edit" asp-route-id="@book.Id" class="btn btn-sm btn-warning"> *@
-@*                         Изменить *@
-@*                     </a> *@
-@*                     <a id="delete-btn" class="btn btn-sm btn-danger" onclick="deleteBook(@book.Id)"> *@
-@*                         Удалить *@
-@*                     </a> *@
-@*                 </div> *@
-@*             </div> *@
-@*         } *@
-@*     } *@
-@* </div> *@
-
 <table class="table table-sm table-hover table-bordered table-striped">
     <thead>
     <tr>
-        <th>Название</th>
-        <th>Автор</th>
+        <th>
+            <sort-header action="@nameof(LibraryController.Index)" up="@Model.SortViewModel.Up" current="@Model.SortViewModel.Current" property="@Model.SortViewModel.IdSort">
+                Id
+            </sort-header>
+        </th>
+        <th>
+            <sort-header action="@nameof(LibraryController.Index)" up="@Model.SortViewModel.Up" current="@Model.SortViewModel.Current" property="@Model.SortViewModel.NameSort">
+                Название
+            </sort-header>
+        </th>
+        <th>
+            <sort-header action="@nameof(LibraryController.Index)" up="@Model.SortViewModel.Up" current="@Model.SortViewModel.Current" property="@Model.SortViewModel.AuthorSort">
+                Автор
+            </sort-header>
+        </th>
         <th></th>
     </tr>
     </thead>
     <tbody>
-    @{
-    foreach (var book in Model)
+    @foreach (var book in Model.PagedModel.Items)
     {
-    <tr>
-        <td>
-            <a class="link " asp-controller="Library" asp-action="GetById" asp-route-id="@book.Id">
-                &quot;@book.Name&quot;
-            </a>
-        </td>
-        <td>@book.Author</td>
-        <td>
-            <a asp-controller="Library" asp-action="Edit" asp-route-id="@book.Id" class="btn btn-sm btn-warning">
-                Изменить
-            </a>
-            <a id="delete-btn" class="btn btn-sm btn-danger" onclick="deleteBook(@book.Id)">
-                Удалить
-            </a>
-        </td>
-    </tr>
+        <tr>
+            <td>
+                @book.Id
+            </td>
+            <td>
+                <a class="link" asp-controller="Library" asp-action="GetById" asp-route-id="@book.Id">
+                    &quot;@book.Name&quot;
+                </a>
+            </td>
+            <td>@book.Author</td>
+            <td>
+                <a asp-controller="Library" asp-action="Edit" asp-route-id="@book.Id" class="btn btn-sm btn-warning">
+                    Изменить
+                </a>
+                <a id="delete-btn" class="btn btn-sm btn-danger" onclick="deleteBook(@book.Id)">
+                    Удалить
+                </a>
+            </td>
+        </tr>
     }
-    }
+
     </tbody>
 </table>
+<page-link page-model="Model.PagedModel" page-action="@nameof(LibraryController.Index)"></page-link>
 
-<a asp-controller="Library" asp-action="Create" class="btn btn-primary mt-2">Создать</a>
-<a asp-controller="Library" asp-action="FilterBooks" class="btn btn-secondary mt-2">Поиск</a>
+<a asp-controller="Library" asp-action="Create" class="btn btn-primary mt-2 btn-sm">Создать</a>
+<a asp-controller="Library" asp-action="FilterBooks" class="btn btn-secondary mt-2 btn-sm">Поиск</a>
 
 <script type="text/javascript">
     document.getElementById("delete-btn").addEventListener("click", deleteBook);

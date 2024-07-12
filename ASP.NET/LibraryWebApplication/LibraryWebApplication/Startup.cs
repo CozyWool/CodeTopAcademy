@@ -1,5 +1,6 @@
 ﻿using LibraryWebApplication.DataAccess.Contexts;
 using LibraryWebApplication.DataAccess.Repositories;
+using LibraryWebApplication.Middlewares;
 using LibraryWebApplication.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,9 +27,10 @@ public class Startup
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
+        app.UseMiddleware<ExceptionHandlingMiddleware>();
         if (env.IsDevelopment())
         {
-            app.UseDeveloperExceptionPage();
+            // app.UseDeveloperExceptionPage();
         }
 
         app.UseStatusCodePages();

@@ -1,6 +1,6 @@
-﻿using AutoMapper;
-using LibraryWebApplication.DataAccess.Filters;
-using LibraryWebApplication.DataAccess.Repositories;
+﻿using LibraryWebApplication.DataAccess.Filters;
+using LibraryWebApplication.Enums;
+using LibraryWebApplication.Messages;
 using LibraryWebApplication.Models;
 using LibraryWebApplication.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -11,21 +11,35 @@ namespace LibraryWebApplication.Controllers;
 public class LibraryController : Controller
 {
     private readonly IBookService _bookService;
-    private readonly IMapper _mapper;
 
-    public LibraryController(IBookService bookService, IMapper mapper)
+    public LibraryController(IBookService bookService)
     {
         _bookService = bookService;
-        _mapper = mapper;
     }
 
     [Route("/")]
     [HttpGet("Index")]
-    public IActionResult Index()
+    public async Task<IActionResult> Index([FromQuery] IndexRequest request)
     {
-        ViewBag.Title = "Библиотека";
+        //TODO: биндер наверное сделаю, после всего остального
+        request.PageSize ??= HttpContext.Request.Cookies.ContainsKey("pageSize")
+            ? Convert.ToInt32(HttpContext.Request.Cookies["pageSize"])
+            : 10;
+        request.CurrentPage ??= HttpContext.Request.Cookies.ContainsKey("currentPage")
+            ? Convert.ToInt32(HttpContext.Request.Cookies["currentPage"])
+            : 1;
+        request.SortOrder ??= HttpContext.Request.Cookies.ContainsKey("sortOrder")
+            ? Enum.Parse<SortState>(HttpContext.Request.Cookies["sortOrder"])
+            : SortState.IdAsc;
 
-        return View(_bookService.GetAll());
+        HttpContext.Response.Cookies.Append("pageSize", request.PageSize.ToString());
+        HttpContext.Response.Cookies.Append("currentPage", request.CurrentPage.ToString());
+        HttpContext.Response.Cookies.Append("sortOrder", request.SortOrder.ToString());
+
+        var viewModel = await _bookService.GetSortedPaged(request.CurrentPage ?? 1, request.PageSize ?? 10,
+            request.SortOrder ?? SortState.IdAsc);
+        ViewBag.Title = "Библиотека";
+        return View(viewModel);
     }
 
     [HttpGet("{id}")]
@@ -33,7 +47,8 @@ public class LibraryController : Controller
     {
         var bookModel = _bookService.GetById(id);
         if (bookModel == null)
-            return NotFound(id);
+            throw new ArgumentException();
+        // return NotFound(id);
 
         ViewBag.Title = bookModel.Name;
         return View("DetailedBook", bookModel);
@@ -80,22 +95,10 @@ public class LibraryController : Controller
     }
 
     [HttpGet("filter")]
-    public IActionResult FilterBooks(
-        [FromQuery] string? name = null,
-        [FromQuery] string? author = null,
-        [FromQuery] string? style = null,
-        [FromQuery] string? publisher = null,
-        [FromQuery] int? publishingYear = null
-    )
+    public IActionResult FilterBooks([FromQuery] BookFilter bookFilter)
     {
-        var bookFilter = new BookFilter
-        {
-            Name = name,
-            Author = author,
-            Style = style,
-            Publisher = publisher,
-            PublishingYear = publishingYear
-        };
+        //TODO: Объединить с сортировкой и пагинацией
+
         var books = _bookService.GetBooksByFilter(bookFilter);
         var filteredBooksModel = new FilteredBooksModel
         {

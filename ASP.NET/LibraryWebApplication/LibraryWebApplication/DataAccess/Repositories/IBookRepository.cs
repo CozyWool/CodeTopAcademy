@@ -1,5 +1,6 @@
 ﻿using LibraryWebApplication.DataAccess.Entities;
 using LibraryWebApplication.DataAccess.Filters;
+using LibraryWebApplication.Enums;
 
 namespace LibraryWebApplication.DataAccess.Repositories;
 
@@ -11,4 +12,5 @@ public interface IBookRepository
     void Update(BookEntity entity);
     void Delete(int id);
     BookEntity[] GetBooksByFilter(BookFilter bookFilter);
+    Task<(BookEntity[] bookEntities, int count)> GetSortedPaged(int currentPage, int pageSize, SortState sortOrder);
 }
