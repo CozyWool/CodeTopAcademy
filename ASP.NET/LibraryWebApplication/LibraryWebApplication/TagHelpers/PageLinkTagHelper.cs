@@ -62,7 +62,7 @@ public class PageLinkTagHelper : TagHelper
         else
         {
             link.Attributes["href"] =
-                urlHelper.Action(PageAction, new {page = pageNumber, pageSize = PageModel.PageSize});
+                urlHelper.Action(PageAction, new {currentPage = pageNumber, pageSize = PageModel.PageSize});
         }
 
         item.AddCssClass("page-item");

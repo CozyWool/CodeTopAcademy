@@ -21,23 +21,7 @@ public class LibraryController : Controller
     [HttpGet("Index")]
     public async Task<IActionResult> Index([FromQuery] IndexRequest request)
     {
-        //TODO: биндер наверное сделаю, после всего остального
-        request.PageSize ??= HttpContext.Request.Cookies.ContainsKey("pageSize")
-            ? Convert.ToInt32(HttpContext.Request.Cookies["pageSize"])
-            : 10;
-        request.CurrentPage ??= HttpContext.Request.Cookies.ContainsKey("currentPage")
-            ? Convert.ToInt32(HttpContext.Request.Cookies["currentPage"])
-            : 1;
-        request.SortOrder ??= HttpContext.Request.Cookies.ContainsKey("sortOrder")
-            ? Enum.Parse<SortState>(HttpContext.Request.Cookies["sortOrder"])
-            : SortState.IdAsc;
-
-        HttpContext.Response.Cookies.Append("pageSize", request.PageSize.ToString());
-        HttpContext.Response.Cookies.Append("currentPage", request.CurrentPage.ToString());
-        HttpContext.Response.Cookies.Append("sortOrder", request.SortOrder.ToString());
-
-        var viewModel = await _bookService.GetSortedPaged(request.CurrentPage ?? 1, request.PageSize ?? 10,
-            request.SortOrder ?? SortState.IdAsc);
+        var viewModel = await _bookService.GetSortedPaged(request.CurrentPage, request.PageSize, request.SortOrder);
         ViewBag.Title = "Библиотека";
         return View(viewModel);
     }

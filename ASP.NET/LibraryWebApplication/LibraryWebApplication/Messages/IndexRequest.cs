@@ -5,7 +5,7 @@ namespace LibraryWebApplication.Messages;
 
 public class IndexRequest
 {
-    [BindProperty(Name = "sortOrder")] public SortState? SortOrder { get; set; } = null;
-    [BindProperty(Name = "page")] public int? CurrentPage { get; set; } = null;
-    [BindProperty(Name = "pageSize")] public int? PageSize { get; set; } = null;
+    [BindProperty(Name = "sortOrder")] public SortState SortOrder { get; set; }
+    [BindProperty(Name = "currentPage")] public int CurrentPage { get; set; }
+    [BindProperty(Name = "pageSize")] public int PageSize { get; set; }
 }
