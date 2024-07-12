@@ -40,10 +40,8 @@ public class IndexRequestModelBinder : IModelBinder
                     ? Enum.Parse<SortState>(context.Request.Cookies["sortOrder"])
                     : SortState.IdAsc
         };
-        var b = bindingContext.ValueProvider.GetValue("currentPage").FirstValue;
-        var a = int.TryParse(b,
-            out var currentPage);
-        request.CurrentPage = a
+        request.CurrentPage = int.TryParse(bindingContext.ValueProvider.GetValue("currentPage").FirstValue,
+            out var currentPage)
             ? currentPage
             : context.Request.Cookies.ContainsKey("currentPage")
                 ? Convert.ToInt32(context.Request.Cookies["currentPage"])
