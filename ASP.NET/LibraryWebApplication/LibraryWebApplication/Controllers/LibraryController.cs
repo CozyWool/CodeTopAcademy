@@ -1,6 +1,6 @@
-﻿using AutoMapper;
-using LibraryWebApplication.DataAccess.Filters;
-using LibraryWebApplication.DataAccess.Repositories;
+﻿using LibraryWebApplication.DataAccess.Filters;
+using LibraryWebApplication.Enums;
+using LibraryWebApplication.Messages;
 using LibraryWebApplication.Models;
 using LibraryWebApplication.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -11,21 +11,19 @@ namespace LibraryWebApplication.Controllers;
 public class LibraryController : Controller
 {
     private readonly IBookService _bookService;
-    private readonly IMapper _mapper;
 
-    public LibraryController(IBookService bookService, IMapper mapper)
+    public LibraryController(IBookService bookService)
     {
         _bookService = bookService;
-        _mapper = mapper;
     }
 
     [Route("/")]
     [HttpGet("Index")]
-    public IActionResult Index()
+    public async Task<IActionResult> Index([FromQuery] IndexRequest request)
     {
+        var viewModel = await _bookService.GetSortedPaged(request.CurrentPage, request.PageSize, request.SortOrder);
         ViewBag.Title = "Библиотека";
-
-        return View(_bookService.GetAll());
+        return View(viewModel);
     }
 
     [HttpGet("{id}")]
@@ -33,7 +31,8 @@ public class LibraryController : Controller
     {
         var bookModel = _bookService.GetById(id);
         if (bookModel == null)
-            return NotFound(id);
+            throw new ArgumentException();
+        // return NotFound(id);
 
         ViewBag.Title = bookModel.Name;
         return View("DetailedBook", bookModel);
@@ -80,22 +79,10 @@ public class LibraryController : Controller
     }
 
     [HttpGet("filter")]
-    public IActionResult FilterBooks(
-        [FromQuery] string? name = null,
-        [FromQuery] string? author = null,
-        [FromQuery] string? style = null,
-        [FromQuery] string? publisher = null,
-        [FromQuery] int? publishingYear = null
-    )
+    public IActionResult FilterBooks([FromQuery] BookFilter bookFilter)
     {
-        var bookFilter = new BookFilter
-        {
-            Name = name,
-            Author = author,
-            Style = style,
-            Publisher = publisher,
-            PublishingYear = publishingYear
-        };
+        //TODO: Объединить с сортировкой и пагинацией
+
         var books = _bookService.GetBooksByFilter(bookFilter);
         var filteredBooksModel = new FilteredBooksModel
         {

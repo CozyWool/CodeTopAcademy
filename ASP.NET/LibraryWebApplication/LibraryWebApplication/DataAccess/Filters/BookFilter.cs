@@ -1,6 +1,5 @@
 namespace LibraryWebApplication.DataAccess.Filters;
 
-//TODO: Стоит ли его выделять в отдельную папку? Или где его лучше хранить?
 public class BookFilter
 {
     public string? Name { get; set; }

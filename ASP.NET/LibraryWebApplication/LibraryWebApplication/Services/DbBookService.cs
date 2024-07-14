@@ -2,6 +2,7 @@ using AutoMapper;
 using LibraryWebApplication.DataAccess.Entities;
 using LibraryWebApplication.DataAccess.Filters;
 using LibraryWebApplication.DataAccess.Repositories;
+using LibraryWebApplication.Enums;
 using LibraryWebApplication.Models;
 
 namespace LibraryWebApplication.Services;
@@ -52,4 +53,20 @@ public class DbBookService : IBookService
     {
         return _mapper.Map<BookModel[]>(_bookRepository.GetBooksByFilter(bookFilter));
     }
+
+    public async Task<IndexViewModel> GetSortedPaged(int currentPage, int pageSize, SortState sortOrder)
+    {
+        
+        var (bookEntities, count) = await _bookRepository.GetSortedPaged(currentPage, pageSize, sortOrder);
+
+        var items = _mapper.Map<List<BookModel>>(bookEntities);
+        var pagedModel = new PagedModel<BookModel>(count, currentPage, pageSize, items);
+        var indexViewModel = new IndexViewModel
+        {
+            PagedModel = pagedModel,
+            SortViewModel = new SortViewModel(sortOrder)
+        };
+        return indexViewModel; 
+    }
+
 }
