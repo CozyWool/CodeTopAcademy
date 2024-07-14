@@ -9,8 +9,7 @@ public class IndexRequestModelBinderProvider(ILoggerFactory loggerFactory, IHttp
 {
     public IModelBinder GetBinder(ModelBinderProviderContext context)
     {
-        var simpleTypeModelBinder = new SimpleTypeModelBinder(typeof(IndexRequest), loggerFactory);
-        var binder = new IndexRequestModelBinder(simpleTypeModelBinder, httpContextAccessor);
+        var binder = new IndexRequestModelBinder(httpContextAccessor);
         return context.Metadata.ModelType == typeof(IndexRequest) ? binder : null;
     }
 }

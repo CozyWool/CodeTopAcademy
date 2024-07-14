@@ -6,26 +6,17 @@ namespace LibraryWebApplication.Binders;
 
 public class IndexRequestModelBinder : IModelBinder
 {
-    private readonly IModelBinder _modelBinder;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public IndexRequestModelBinder(IModelBinder modelBinder, IHttpContextAccessor httpContextAccessor)
+    public IndexRequestModelBinder(IHttpContextAccessor httpContextAccessor)
     {
-        _modelBinder = modelBinder;
         _httpContextAccessor = httpContextAccessor;
     }
 
     public Task BindModelAsync(ModelBindingContext bindingContext)
     {
         var context = _httpContextAccessor.HttpContext;
-        var noCookies = !context.Request.Cookies.ContainsKey("pageSize") &&
-                        !context.Request.Cookies.ContainsKey("currentPage") &&
-                        !context.Request.Cookies.ContainsKey("sortOrder");
-        if (noCookies)
-        {
-            return _modelBinder.BindModelAsync(bindingContext);
-        }
-
+        
         var request = new IndexRequest
         {
             PageSize = int.TryParse(bindingContext.ValueProvider.GetValue("pageSize").FirstValue, out var pageSize)
@@ -38,14 +29,14 @@ public class IndexRequestModelBinder : IModelBinder
                 ? sortState
                 : context.Request.Cookies.ContainsKey("sortOrder")
                     ? Enum.Parse<SortState>(context.Request.Cookies["sortOrder"])
-                    : SortState.IdAsc
+                    : SortState.IdAsc,
+            CurrentPage = int.TryParse(bindingContext.ValueProvider.GetValue("currentPage").FirstValue,
+                out var currentPage)
+                ? currentPage
+                : context.Request.Cookies.ContainsKey("currentPage")
+                    ? Convert.ToInt32(context.Request.Cookies["currentPage"])
+                    : 1
         };
-        request.CurrentPage = int.TryParse(bindingContext.ValueProvider.GetValue("currentPage").FirstValue,
-            out var currentPage)
-            ? currentPage
-            : context.Request.Cookies.ContainsKey("currentPage")
-                ? Convert.ToInt32(context.Request.Cookies["currentPage"])
-                : 1;
 
         context.Response.Cookies.Append("pageSize", request.PageSize.ToString());
         context.Response.Cookies.Append("currentPage", request.CurrentPage.ToString());
