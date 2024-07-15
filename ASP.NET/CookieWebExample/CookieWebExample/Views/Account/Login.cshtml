@@ -1,0 +1,31 @@
+﻿@model LoginModel
+
+<h2>Страница авторизации пользователя</h2>
+
+<a asp-action="Register" asp-controller="Account">Регистрация</a>
+
+<main class="form-signin w-100 m-auto">
+    <form asp-action="Login" asp-controller="Account" method="post">
+        <input type="hidden" name="returnUrl" value="@ViewData["ReturnUrl"]"/>
+        <div class="validation" asp-validation-summary="ModelOnly"></div>
+
+        <div class="form-floating">
+            <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" asp-for="Email">
+            <label asp-for="Email" for="floatingInput">Email address</label>
+            <span asp-validation-for="Email"></span>
+        </div>
+        <div class="form-floating">
+            <input type="password" class="form-control" id="floatingPassword" placeholder="Password" asp-for="Password">
+            <label asp-for="Password" for="floatingPassword">Password</label>
+            <span asp-validation-for="Password"></span>
+        </div>
+
+        <button class="btn btn-primary w-100 py-2" type="submit">Sign in</button>
+        <p class="mt-5 mb-3 text-body-secondary">© 2017–2024</p>
+    </form>
+</main>
+<style>
+    .form-signin{
+        max-width: 330px;
+    }
+</style>
