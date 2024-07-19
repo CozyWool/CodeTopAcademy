@@ -1,6 +1,7 @@
 using System.Security.Claims;
 using LibraryWebApplication.DataAccess.Entities;
 using LibraryWebApplication.DataAccess.Repositories;
+using LibraryWebApplication.Enums;
 using LibraryWebApplication.Helpers;
 using LibraryWebApplication.Models;
 using Microsoft.AspNetCore.Authentication;
@@ -57,7 +58,7 @@ public class UserService : IUserService
         return true;
     }
 
-    private async Task Authenticate(string email, string role, bool rememberMe, DateOnly birthday)
+    private async Task Authenticate(string email, Role role, bool rememberMe, DateOnly birthday)
     {
         // Не люблю я работу с датами, так что https://stackoverflow.com/questions/9/how-do-i-calculate-someones-age-based-on-a-datetime-type-birthday
         var age = DateTime.Now.Year - birthday.Year;
@@ -69,7 +70,7 @@ public class UserService : IUserService
         var claims = new[]
         {
             new Claim(ClaimTypes.Name, email),
-            new Claim(ClaimTypes.Role, role),
+            new Claim(ClaimTypes.Role, role.ToString()),
             new Claim(ClaimTypes.Email, email),
             new Claim("IsAdult", (age >= 18).ToString())
         };

@@ -104,6 +104,7 @@ public class LibraryController : Controller
     public IActionResult UserData()
     {
         var list = User.Claims.Select(claim => claim.Value).ToList();
+        ViewBag.Title = $"UserData";
         return Content(string.Join(" ", list));
     }
 }

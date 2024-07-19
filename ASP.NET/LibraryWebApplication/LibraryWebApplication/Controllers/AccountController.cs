@@ -18,6 +18,7 @@ public class AccountController : Controller
     public IActionResult Login(string? returnUrl = null)
     {
         ViewData["ReturnUrl"] = returnUrl;
+        ViewBag.Title = "Вход";
         return View();
     }
 
@@ -38,6 +39,7 @@ public class AccountController : Controller
     public IActionResult Register(string? returnUrl = null)
     {
         ViewData["ReturnUrl"] = returnUrl;
+        ViewBag.Title = "Регистрация";
         return View();
     }
 

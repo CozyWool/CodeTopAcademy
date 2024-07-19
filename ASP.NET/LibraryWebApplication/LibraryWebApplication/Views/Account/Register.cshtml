@@ -1,4 +1,5 @@
 ﻿@model RegisterModel
+@using LibraryWebApplication.Enums
 
 <h2 class="text-center">Регистрация</h2>
 
@@ -10,28 +11,30 @@
             <div class="text-danger" asp-validation-summary="ModelOnly"></div>
             <div>
                 <div class="form-floating">
-                    <input type="email" class="form-control" id="floatingInput" asp-for="Email">
-                    <label asp-for="Email" for="floatingInput">Введите Email</label>
-                    <span asp-validation-for="Email"></span>
+                    <input type="email" class="form-control" asp-for="Email">
+                    <label asp-for="Email">@Html.DisplayNameFor(m => m.Email)</label>
+                    <span asp-validation-for="Email" class="text-danger"></span>
                 </div>
                 <div class="form-floating mt-2">
-                    <input asp-for="Password" class="form-control" id="floatingPassword"/>
-                    <label asp-for="Password" for="floatingPassword">Введите пароль</label>
+                    <input type="password" asp-for="Password" class="form-control"/>
+                    <label asp-for="Password">@Html.DisplayNameFor(m => m.Password)</label>
                     <span asp-validation-for="Password" class="text-danger"></span>
                 </div>
                 <div class="form-floating mt-2">
-                    <input asp-for="ConfirmPassword" class="form-control" id="floatingConfirmPassword"/>
-                    <label asp-for="ConfirmPassword" for="floatingConfirmPassword">Повторите пароль</label>
+                    <input type="password" asp-for="ConfirmPassword" class="form-control"/>
+                    <label asp-for="ConfirmPassword">@Html.DisplayNameFor(m => m.ConfirmPassword)</label>
                     <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
                 </div>
                 <div class="form-floating mt-2">
-                    <input asp-for="Role" class="form-control" id="floatingRole"/>
-                    <label asp-for="Role" for="floatingRole">Роль</label>
+                    <select class="form-select" asp-for="Role" asp-items="Html.GetEnumSelectList<Role>()">
+                        <option selected value="" disabled>Выберите роль</option>
+                    </select>
+                    <label asp-for="Role">@Html.DisplayNameFor(m => m.Role)</label>
                     <span asp-validation-for="Role" class="text-danger"></span>
                 </div>
                 <div class="form-floating mt-2">
-                    <input type="date" asp-for="Birthday" class="form-control" id="floatingBirthday"/>
-                    <label asp-for="Birthday" for="floatingRole">Дата рождения</label>
+                    <input type="date" asp-for="Birthday" class="form-control"/>
+                    <label asp-for="Birthday">@Html.DisplayNameFor(m => m.Birthday)</label>
                     <span asp-validation-for="Birthday" class="text-danger"></span>
                 </div>
                 <div>

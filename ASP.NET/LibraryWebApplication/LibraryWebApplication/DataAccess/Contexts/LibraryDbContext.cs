@@ -10,7 +10,7 @@ public class LibraryDbContext : DbContext
     public LibraryDbContext(DbContextOptions<LibraryDbContext> options)
         : base(options)
     {
-        Console.WriteLine(Database.GenerateCreateScript());
+        // Console.WriteLine(Database.GenerateCreateScript());
     }
 
     public virtual DbSet<BookEntity> Books { get; set; }
