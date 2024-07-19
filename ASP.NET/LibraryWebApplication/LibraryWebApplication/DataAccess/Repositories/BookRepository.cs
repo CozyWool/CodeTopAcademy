@@ -1,5 +1,4 @@
-﻿using System.Security.Claims;
-using LibraryWebApplication.DataAccess.Contexts;
+﻿using LibraryWebApplication.DataAccess.Contexts;
 using LibraryWebApplication.DataAccess.Entities;
 using LibraryWebApplication.DataAccess.Filters;
 using LibraryWebApplication.Enums;
