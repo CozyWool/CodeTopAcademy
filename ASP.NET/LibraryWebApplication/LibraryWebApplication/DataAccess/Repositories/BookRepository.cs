@@ -1,4 +1,5 @@
-﻿using LibraryWebApplication.DataAccess.Contexts;
+﻿using System.Security.Claims;
+using LibraryWebApplication.DataAccess.Contexts;
 using LibraryWebApplication.DataAccess.Entities;
 using LibraryWebApplication.DataAccess.Filters;
 using LibraryWebApplication.Enums;
@@ -6,11 +7,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LibraryWebApplication.DataAccess.Repositories;
 
-public class DbBookRepository : IBookRepository
+public class BookRepository : IBookRepository
 {
     private readonly LibraryDbContext _libraryDbContext;
 
-    public DbBookRepository(LibraryDbContext libraryDbContext)
+    public BookRepository(LibraryDbContext libraryDbContext)
     {
         _libraryDbContext = libraryDbContext;
     }
@@ -62,7 +63,7 @@ public class DbBookRepository : IBookRepository
         _libraryDbContext.SaveChanges();
     }
 
-    public BookEntity[] GetBooksByFilter(BookFilter bookFilter)
+    public BookEntity[] GetBooksByFilter(BookFilter bookFilter, bool isAdult)
     {
         var query = _libraryDbContext.Books.AsQueryable();
         if (!string.IsNullOrEmpty(bookFilter.Name))
@@ -90,11 +91,16 @@ public class DbBookRepository : IBookRepository
             query = query.Where(x => x.PublishingDate.Year == bookFilter.PublishingYear);
         }
 
+        if (!isAdult)
+        {
+            query = query.Where(x => !EF.Functions.Like(x.Style, "%Взрослое%"));
+        }
+    
         return query.OrderBy(x => x.Id).ToArray();
     }
 
     public async Task<(BookEntity[] bookEntities, int count)> GetSortedPaged(int currentPage, int pageSize,
-        SortState sortOrder)
+        SortState sortOrder, bool isAdult)
     {
         var query = _libraryDbContext.Books.AsQueryable();
 
@@ -110,12 +116,20 @@ public class DbBookRepository : IBookRepository
             SortState.AuthorAsc => query.OrderBy(x => x.Author),
             _ => query.OrderBy(x => x.Id)
         };
+        
         query = query
             .Skip((currentPage - 1) * pageSize)
             .Take(pageSize);
 
+        var countQuery = _libraryDbContext.Books.AsQueryable();
+        if (!isAdult)
+        {
+            query = query.Where(x => !EF.Functions.Like(x.Style, "%Взрослое%"));
+            countQuery = countQuery.Where(x => !EF.Functions.Like(x.Style, "%Взрослое%"));
+        }
+
         var currentPageItems = await query.ToArrayAsync();
-        var count = await _libraryDbContext.Books.CountAsync();
+        var count = await countQuery.CountAsync();
         return (currentPageItems, count);
     }
 }

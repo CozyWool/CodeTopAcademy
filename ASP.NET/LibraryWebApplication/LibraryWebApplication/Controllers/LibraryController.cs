@@ -3,6 +3,7 @@ using LibraryWebApplication.Enums;
 using LibraryWebApplication.Messages;
 using LibraryWebApplication.Models;
 using LibraryWebApplication.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace LibraryWebApplication.Controllers;
@@ -17,6 +18,7 @@ public class LibraryController : Controller
         _bookService = bookService;
     }
 
+    [AllowAnonymous]
     [Route("/")]
     [HttpGet("Index")]
     public async Task<IActionResult> Index([FromQuery] IndexRequest request)
@@ -26,6 +28,7 @@ public class LibraryController : Controller
         return View(viewModel);
     }
 
+    [AllowAnonymous]
     [HttpGet("{id}")]
     public IActionResult GetById([FromRoute] int id)
     {
@@ -38,6 +41,7 @@ public class LibraryController : Controller
         return View("DetailedBook", bookModel);
     }
 
+    [Authorize(Roles = "Admin, Manager")]
     [HttpGet("create")]
     public IActionResult Create()
     {
@@ -47,6 +51,7 @@ public class LibraryController : Controller
         return View("CreateBook", bookModel);
     }
 
+    [Authorize(Roles = "Admin, Manager")]
     [HttpPost("create")]
     public IActionResult Create([FromForm] BookModel bookModel)
     {
@@ -54,6 +59,7 @@ public class LibraryController : Controller
         return RedirectToAction(nameof(Index));
     }
 
+    [Authorize(Roles = "Admin, Manager")]
     [HttpGet("edit/{id:int}")]
     public IActionResult Edit([FromRoute] int id)
     {
@@ -64,6 +70,7 @@ public class LibraryController : Controller
         return View("EditBook", bookModel);
     }
 
+    [Authorize(Roles = "Admin, Manager")]
     [HttpPost("edit")]
     public IActionResult Edit([FromForm] BookModel bookModel)
     {
@@ -71,6 +78,7 @@ public class LibraryController : Controller
         return RedirectToAction(nameof(Index));
     }
 
+    [Authorize(Roles = "Admin, Manager")]
     [HttpDelete("{id:int}")]
     public IActionResult Delete([FromRoute] int id)
     {
@@ -91,5 +99,11 @@ public class LibraryController : Controller
 
         ViewBag.Title = "Поиск книг";
         return View("FilteredBooks", filteredBooksModel);
+    }
+
+    public IActionResult UserData()
+    {
+        var list = User.Claims.Select(claim => claim.Value).ToList();
+        return Content(string.Join(" ", list));
     }
 }

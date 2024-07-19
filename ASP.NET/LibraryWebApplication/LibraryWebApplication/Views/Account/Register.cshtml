@@ -1,0 +1,50 @@
+﻿@model RegisterModel
+
+<h2 class="text-center">Регистрация</h2>
+
+<div class="row form-register w-100 m-auto">
+    <div class="col-md-12">
+        <form asp-action="Register" asp-controller="Account" asp-anti-forgery="true">
+            <input type="hidden" name="returnUrl" value="@ViewData["ReturnUrl"]"/>
+
+            <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+            <div>
+                <div class="form-floating">
+                    <input type="email" class="form-control" id="floatingInput" asp-for="Email">
+                    <label asp-for="Email" for="floatingInput">Введите Email</label>
+                    <span asp-validation-for="Email"></span>
+                </div>
+                <div class="form-floating mt-2">
+                    <input asp-for="Password" class="form-control" id="floatingPassword"/>
+                    <label asp-for="Password" for="floatingPassword">Введите пароль</label>
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-floating mt-2">
+                    <input asp-for="ConfirmPassword" class="form-control" id="floatingConfirmPassword"/>
+                    <label asp-for="ConfirmPassword" for="floatingConfirmPassword">Повторите пароль</label>
+                    <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                </div>
+                <div class="form-floating mt-2">
+                    <input asp-for="Role" class="form-control" id="floatingRole"/>
+                    <label asp-for="Role" for="floatingRole">Роль</label>
+                    <span asp-validation-for="Role" class="text-danger"></span>
+                </div>
+                <div class="form-floating mt-2">
+                    <input type="date" asp-for="Birthday" class="form-control" id="floatingBirthday"/>
+                    <label asp-for="Birthday" for="floatingRole">Дата рождения</label>
+                    <span asp-validation-for="Birthday" class="text-danger"></span>
+                </div>
+                <div>
+                    <button type="submit" class="btn btn-primary w-100 py-2 mt-2">Регистрация</button>
+                    <a asp-action="Login" asp-controller="Account" class="btn btn-secondary w-100 py-2 mt-2">Уже зарегистрированы? Войти</a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    .form-register{
+        max-width: 330px;
+    }
+</style>
