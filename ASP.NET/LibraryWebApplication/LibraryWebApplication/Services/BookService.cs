@@ -1,3 +1,4 @@
+using System.Security.Claims;
 using AutoMapper;
 using LibraryWebApplication.DataAccess.Entities;
 using LibraryWebApplication.DataAccess.Filters;
@@ -7,16 +8,21 @@ using LibraryWebApplication.Models;
 
 namespace LibraryWebApplication.Services;
 
-public class DbBookService : IBookService
+public class BookService : IBookService
 {
     private readonly IBookRepository _bookRepository;
     private readonly IMapper _mapper;
+    private IHttpContextAccessor _httpContextAccessor;
+    private ClaimsPrincipal User => _httpContextAccessor.HttpContext.User;
+    private bool IsAdult => User.HasClaim("IsAdult", true.ToString());
 
-    public DbBookService(IBookRepository bookRepository, IMapper mapper)
+    public BookService(IBookRepository bookRepository, IMapper mapper, IHttpContextAccessor httpContextAccessor)
     {
         _bookRepository = bookRepository;
         _mapper = mapper;
+        _httpContextAccessor = httpContextAccessor;
     }
+
     public BookModel[] GetAll()
     {
         return _mapper.Map<BookModel[]>(_bookRepository.GetAll());
@@ -51,13 +57,12 @@ public class DbBookService : IBookService
 
     public BookModel[] GetBooksByFilter(BookFilter bookFilter)
     {
-        return _mapper.Map<BookModel[]>(_bookRepository.GetBooksByFilter(bookFilter));
+        return _mapper.Map<BookModel[]>(_bookRepository.GetBooksByFilter(bookFilter, IsAdult));
     }
 
     public async Task<IndexViewModel> GetSortedPaged(int currentPage, int pageSize, SortState sortOrder)
     {
-        
-        var (bookEntities, count) = await _bookRepository.GetSortedPaged(currentPage, pageSize, sortOrder);
+        var (bookEntities, count) = await _bookRepository.GetSortedPaged(currentPage, pageSize, sortOrder, IsAdult);
 
         var items = _mapper.Map<List<BookModel>>(bookEntities);
         var pagedModel = new PagedModel<BookModel>(count, currentPage, pageSize, items);
@@ -66,7 +71,7 @@ public class DbBookService : IBookService
             PagedModel = pagedModel,
             SortViewModel = new SortViewModel(sortOrder)
         };
-        return indexViewModel; 
+        return indexViewModel;
     }
 
 }

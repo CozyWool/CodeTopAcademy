@@ -11,6 +11,8 @@ public interface IBookRepository
     void Create(BookEntity entity);
     void Update(BookEntity entity);
     void Delete(int id);
-    BookEntity[] GetBooksByFilter(BookFilter bookFilter);
-    Task<(BookEntity[] bookEntities, int count)> GetSortedPaged(int currentPage, int pageSize, SortState sortOrder);
+    BookEntity[] GetBooksByFilter(BookFilter bookFilter, bool isAdult);
+
+    Task<(BookEntity[] bookEntities, int count)> GetSortedPaged(int currentPage, int pageSize, SortState sortOrder,
+        bool isAdult);
 }

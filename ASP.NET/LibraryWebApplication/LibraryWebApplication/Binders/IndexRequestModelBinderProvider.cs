@@ -1,10 +1,9 @@
 ﻿using LibraryWebApplication.Messages;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Microsoft.AspNetCore.Mvc.ModelBinding.Binders;
 
 namespace LibraryWebApplication.Binders;
 
-public class IndexRequestModelBinderProvider(ILoggerFactory loggerFactory, IHttpContextAccessor httpContextAccessor)
+public class IndexRequestModelBinderProvider(IHttpContextAccessor httpContextAccessor)
     : IModelBinderProvider
 {
     public IModelBinder GetBinder(ModelBinderProviderContext context)
