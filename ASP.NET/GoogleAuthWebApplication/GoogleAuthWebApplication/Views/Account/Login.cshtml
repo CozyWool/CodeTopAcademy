@@ -1,0 +1,59 @@
+﻿@model GoogleAuthWebApplication.Models.LoginModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h1>Log in</h1>
+<div class="text-danger" asp-validation-summary="All"></div>
+
+<div class="row">
+    <div class="col-md-4">
+        <section>
+            <form asp-action="Login" method="post">
+                <h2>Use a local account to log in.</h2>
+                <hr/>
+
+                <input type="hidden" asp-for="ReturnUrl"/>
+                <div class="form-floating">
+                    <input class="form-control" autocomplete="username" type="email" asp-for="Email" value=""/>
+                    <label class="form-label" asp-for="Email">Email</label>
+                    <span class="text-danger field-validation-valid"></span>
+                </div>
+                <div class="form-floating">
+                    <input class="form-control" autocomplete="current-password" type="password" asp-for="Password"/>
+                    <label class="form-label" asp-for="Password">Password</label>
+                    <span class="text-danger field-validation-valid"></span>
+                </div>
+                <div>
+                    <div class="checkbox">
+                        <label class="form-label" asp-for="Remember">
+                            <input class="form-check-input" type="checkbox" asp-for="Remember"/>
+                            Remember me?
+                        </label>
+                    </div>
+                </div>
+                <div>
+                    <button type="submit" class="w-100 btn btn-lg btn-primary">Log in</button>
+                </div>
+            </form>
+        </section>
+    </div>
+    <div class="col-md-6 col-md-offset-2">
+        <section>
+            <h3>Use another service to log in.</h3>
+            <hr/>
+            <div>
+                <p>
+                    There are no external authentication services configured. See this
+                    <a href="https://go.microsoft.com/fwlink/?LinkID=532715">
+                        article
+                        about setting up this ASP.NET application to support logging in via external services
+                    </a>.
+                </p>
+            </div>
+            <div>
+                <a class="btn btn-info" asp-action="GoogleLogin">Log In With Google</a>
+            </div>
+        </section>
+    </div>
+</div>
