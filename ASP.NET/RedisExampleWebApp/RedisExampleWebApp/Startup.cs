@@ -1,4 +1,5 @@
 using System.Text;
+using System.Text.Json;
 using Consul;
 using Microsoft.EntityFrameworkCore;
 using RedisExampleWebApp.Configuration;
@@ -12,10 +13,12 @@ public class Startup(IConfiguration configuration)
     {
         var client = new ConsulClient(clientConfiguration =>
             clientConfiguration.Address = new Uri(configuration.GetSection("ConsulUrl").Value ?? "http://localhost:8500"));
+        services.AddSingleton<IConsulClient>(client);
 
         var getPair = client.KV.Get(configuration.GetSection("AppSettingsKey").Value ?? throw new NullReferenceException("AppSettingsKey was null")).Result;
         var value = Encoding.UTF8.GetString(getPair.Response.Value, 0, getPair.Response.Value.Length);
         File.WriteAllText("appsettings.json", value);
+        
 
 
         services.AddDbContext<ApplicationDbContext>(options =>
