@@ -1,6 +1,4 @@
-﻿using Microsoft.Extensions.Options;
-
-namespace RedisExampleWebApp.Configuration;
+﻿namespace RedisExampleWebApp.Configuration;
 
 public class RedisCacheSettings
 {
