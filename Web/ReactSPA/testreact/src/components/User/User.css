@@ -1,0 +1,23 @@
+.user-name{
+    font-size: 36px;
+}
+
+.contacts{
+    display: flex;
+    width: fit-content;
+    margin: 0 auto;
+    flex-wrap: nowrap;
+    column-gap: 30px;
+    align-items: flex-start;
+}
+
+.heading{
+    font-size: 24px;
+    margin: auto 0;
+}
+
+.address{
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+}
