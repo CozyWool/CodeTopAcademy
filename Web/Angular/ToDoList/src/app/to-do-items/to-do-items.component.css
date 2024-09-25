@@ -1,0 +1,27 @@
+.selected{
+  background-color: greenyellow !important;
+}
+.items {
+  list-style-type: none;
+  padding: 0;
+  width: 15em;
+}
+.items li {
+  cursor: pointer;
+  background-color: #EEE;
+  margin: .5em 0;
+  padding: .3em;
+  height: 1.6em;
+  border-radius: 4px;
+}
+
+.items li:hover{
+  color: #607D8B;
+  background-color: #DDD;
+}
+
+.todo-count {
+  font-size: 0.8rem;
+}
+
+

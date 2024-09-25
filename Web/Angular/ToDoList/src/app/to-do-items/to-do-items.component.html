@@ -1,0 +1,54 @@
+<h2>List items</h2>
+<div *ngIf="!isLoaded">
+  <p>Загрузка данных c back-end сервера...</p>
+</div>
+<div *ngIf="isLoaded">
+  <p>Данные загрузились</p>
+  <ul class="items">
+    <li *ngFor="let item of items" (click)="onSelect(item)"
+        [class.selected]='item.id === selectedItem?.id'>
+      {{ item.name }}
+      <button (click)="detailItem(item.id)">Подробнее</button>
+    </li>
+  </ul>
+  <div *ngIf="selectedItem != null">
+    <h2> {{ selectedItem.name }} </h2>
+    <div><span>Id: </span>{{ selectedItem.id }}</div>
+    <div>
+      <label>Name:
+        <input [(ngModel)]="selectedItem.name" placeholder="name"/>
+      </label>
+    </div>
+    <div>
+      <label>Is complete:
+        <input type="checkbox" [(ngModel)]="selectedItem.isComplete"/>
+      </label>
+    </div>
+    <button (click)="updateItem()">Update task</button>
+    <button (click)="deleteItem()">Delete task</button>
+
+  </div>
+
+
+  <div *ngIf="newItem != null">
+    <h2> {{ newItem.name }} </h2>
+    <div>
+      <div><span>Id: </span>{{ newItem.id }}</div>
+    </div>
+    <div>
+      <label>Name:
+        <input [(ngModel)]="newItem.name" placeholder="Name"/>
+      </label>
+    </div>
+    <div>
+      <label>Is complete:
+        <input type="checkbox" [(ngModel)]="newItem.isComplete"/>
+      </label>
+    </div>
+  </div>
+
+  <button (click)="addItem()">Add new Task</button>
+</div>
+
+
+

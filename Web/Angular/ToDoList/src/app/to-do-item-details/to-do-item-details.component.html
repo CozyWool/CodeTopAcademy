@@ -1,0 +1,22 @@
+<div *ngIf="!isLoaded">
+  <h2>Дождитесь окончания загрузки...</h2>
+</div>
+<div *ngIf="isLoaded">
+  <div *ngIf="item != null">
+    <h2> {{item.name }} </h2>
+    <div><span>Id: </span>{{ item.id }}</div>
+    <div>
+      <label>Name:
+        <input [(ngModel)]="item.name" placeholder="name"/>
+      </label>
+    </div>
+    <div>
+      <label>Is complete:
+        <input type="checkbox" [(ngModel)]="item.isComplete"/>
+      </label>
+    </div>
+  </div>
+</div>
+<nav>
+  <a routerLink="">Back to home</a>
+</nav>
