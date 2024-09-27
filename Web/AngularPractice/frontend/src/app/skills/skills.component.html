@@ -1,0 +1,8 @@
+<div *ngIf="!isLoaded">
+  <h2>Дождитесь окончания загрузки...</h2>
+</div>
+<div *ngIf="isLoaded">
+  <div *ngIf="model != null">
+    <p>Skills: {{ model.skills }}</p>
+  </div>
+</div>
