@@ -1,0 +1,180 @@
+public static void main(String[] args) {
+//    example1();
+//    example2();
+//    example3();
+//    example4();
+//    example5();
+//    example6();
+//    example7();
+//    example8();
+    try {
+        example9();
+    } catch (IOException e) {
+        throw new RuntimeException(e);
+    }
+}
+
+private static void example9() throws FileNotFoundException, IOException {
+        /*InputStream in = null;
+        OutputStream out = null;
+        byte[] buffer = null;
+        try {
+            in = new FileInputStream(new File("test.txt"));
+            System.out.println("Available bytes: " + in.available());
+            buffer = new byte[in.available()];
+            in.read(buffer);
+            File file = new File("out.tmp");
+            out = new FileOutputStream(file);
+            out.write(buffer);
+        }
+        catch(FileNotFoundException ex) {
+            //
+        }
+        catch(IOException ex) {
+            //
+        }
+        finally {
+            try {
+                in.close();
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }*/
+    File file = new File("out.tmp");
+    try (InputStream in = new FileInputStream(new File("test.txt"));
+         var out = new FileOutputStream(file)) {
+        var buffer = new byte[in.available()];
+        in.read(buffer);
+        out.write(buffer);
+    }
+}
+
+private static void example8() {
+    String fileName = "test.txt";
+    String dirName = System.getProperty("user.dir");
+    String fullName = dirName + File.separator + fileName;
+    System.out.println("Path: " + fullName);
+    File file = new File(fullName);
+
+    try {
+        if (file.createNewFile()) {
+            System.out.println("File create");
+        }
+    } catch (IOException ex) {
+        System.out.println(ex);
+    }
+}
+
+private static void example7() {
+    var result = Stream.of("щука", "карась", "окунь")
+            .filter(f -> f.length() > 4);
+    result.forEach(System.out::println);
+}
+
+private static void example6() {
+    List<Fish> array = new ArrayList<>();
+    array.add(new Fish("карась", 1, 120));
+    array.add(new Fish("окунь", 4, 121));
+    array.add(new Fish("щука", 2, 120));
+    array.add(new Fish("щука", 3, 120));
+
+    array.forEach(System.out::println);
+
+    System.out.println();
+
+    array
+            .stream()
+            .peek(f -> f.setPrice(f.getPrice() * 2))
+            .forEach(System.out::println);
+
+}
+
+private static void example5() {
+    List<Fish> array = new ArrayList<>();
+    array.add(new Fish("карась", 1, 120));
+    array.add(new Fish("окунь", 4, 121));
+    array.add(new Fish("щука", 2, 120));
+    array.add(new Fish("щука", 3, 120));
+
+    array
+            .stream()
+            .filter(f -> f.getPrice() > 120)
+            .forEach(f -> f.setPrice(f.getPrice() * 0.9));
+
+    array.forEach(System.out::println);
+}
+
+private static void example4() {
+    List<Fish> array = new ArrayList<>();
+    array.add(new Fish("карась", 1, 120));
+    array.add(new Fish("окунь", 4, 121));
+    array.add(new Fish("щука", 2, 120));
+    array.add(new Fish("щука", 3, 120));
+
+    array.forEach(fish -> {
+        if (fish.getPrice() > 120) {
+            System.out.println(fish);
+        }
+    });
+}
+
+private static void example3() {
+//    Predicate<Fish> predicate = new Predicate<Fish>() {
+//        @Override
+//        public boolean test(Fish fish) {
+//            return fish.getWeight() > 3;
+//        }
+//    };
+
+    List<Fish> array = new ArrayList<>();
+    array.add(new Fish("карась", 1, 120));
+    array.add(new Fish("окунь", 4, 121));
+    array.add(new Fish("щука", 2, 120));
+    array.add(new Fish("щука", 3, 120));
+
+    System.out.println(array);
+    getByPredicate(array, f -> f.getWeight() > 2, f -> f.getPrice() == 120);
+}
+
+public static void getByPredicate(List<Fish> array, Predicate<Fish> predicate1, Predicate<Fish> predicate2) {
+    array.stream().filter(fish -> predicate1.and(predicate2).test(fish)).forEach(System.out::println);
+}
+
+private static void example2() {
+    List<Fish> array = new ArrayList<>();
+    array.add(new Fish("карась", 1, 120));
+    array.add(new Fish("окунь", 4, 121));
+    array.add(new Fish("щука", 2, 120));
+    array.add(new Fish("щука", 3, 120));
+
+    System.out.println(array);
+
+//    array.sort(new Comparator<Fish>() {
+//        @Override
+//        public int compare(Fish f1, Fish f2) {
+//            return (int) f1.getWeight() * 100 - (int) f2.getWeight() * 100;
+//        }
+//    });
+
+    array.sort((f1, f2) -> (int) f1.getWeight() * 100 - (int) f2.getWeight() * 100);
+    System.out.println(array);
+
+}
+
+private static void example1() {
+    Group pinkFloyd = new Group() {
+        @Override
+        public String bestAlbum() {
+            return "Wish You Were Here";
+        }
+    };
+    String album = pinkFloyd.bestAlbum();
+    System.out.println(album);
+    showGroup(pinkFloyd);
+}
+
+public static void showGroup(Group group) {
+    System.out.println(group.bestAlbum());
+}
+

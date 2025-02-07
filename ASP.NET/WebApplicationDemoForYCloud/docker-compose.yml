@@ -1,0 +1,6 @@
+﻿services:
+  webapplicationdemoforycloud:
+    image: webapplicationdemoforycloud
+    build:
+      context: .
+      dockerfile: WebApplicationDemoForYCloud/Dockerfile
