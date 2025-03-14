@@ -10,15 +10,47 @@
 </head>
 <body>
 
+<!--{{#item}}-->
+<!--    <p>Name: {{name}}</p>-->
+<!--    <p>Brand: {{brand}} </p>-->
+<!--    <p>Price: {{price}}</p>-->
+<!--    <p>Size: {{size}}</p>-->
+<!--    <p>Color: {{color}}</p>-->
+<!--    <p>Category: {{category}}</p>-->
+        <!--{{/item}}-->
+
 {{#item}}
-    <p>Name: {{name}}</p>
-    <p>Brand: {{brand}} </p>
-    <p>Price: {{price}}</p>
-    <p>Size: {{size}}</p>
-    <p>Color: {{color}}</p>
-    <p>Category: {{category}}</p>
+    <form method="post" class="form-inline mt-5">
+        <h3>Update product</h3>
+        <div class="form-floating mb-2">
+            <input name="name" class="form-control" value="{{name}}" required/>
+            <label>Name</label>
+        </div>
+        <div class="form-floating mb-2">
+            <input name="brand" class="form-control" value="{{brand}}" required/>
+            <label>Brand</label>
+        </div>
+        <div class="form-floating mb-2">
+            <input name="price" type="number" class="form-control" value="{{price}}" required/>
+            <label>Price</label>
+        </div>
+        <div class="form-floating mb-2">
+            <input name="size" class="form-control" value="{{size}}" required/>
+            <label>Size</label>
+        </div>
+        <div class="form-floating mb-2">
+            <input name="color" class="form-control" value="{{color}}" required/>
+            <label>Color</label>
+        </div>
+        <div class="form-floating mb-2">
+            <input name="category" class="form-control" value="{{category}}" required/>
+            <label>Category</label>
+        </div>
+
+        <input type="submit" value="Update" class="btn btn-lg w-100 btn-outline-dark"/>
+    </form>
 {{/item}}
-<a class="btn btn-primary text-center btn-lg w-100" href="/products">Вернуться на главную</a>
+<a class="btn btn-primary text-center btn-lg w-100 mt-2" href="/products">Back to all products</a>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

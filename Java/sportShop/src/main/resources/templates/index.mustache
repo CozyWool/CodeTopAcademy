@@ -24,11 +24,11 @@
         <label>Brand</label>
     </div>
     <div class="form-floating mb-2">
-        <input name="price" class="form-control"/>
+        <input name="price" type="number" class="form-control"/>
         <label>Price</label>
     </div>
     <div class="form-floating mb-2">
-        <input name="size" type="number" class="form-control"/>
+        <input name="size" class="form-control"/>
         <label>Size</label>
     </div>
     <div class="form-floating mb-2">
@@ -40,7 +40,7 @@
         <label>Category</label>
     </div>
 
-    <input type="submit" value="Обновить" class="btn w-100 btn-outline-dark"/>
+    <input type="submit" value="Search" class="btn w-100 btn-outline-dark"/>
 </form>
 
 
@@ -54,6 +54,7 @@
         <th>Size</th>
         <th>Color</th>
         <th>Category</th>
+        <th>Actions</th>
     </tr>
     </thead>
     <tbody>
@@ -73,10 +74,64 @@
             <td>{{size}}</td>
             <td>{{color}}</td>
             <td>{{category}}</td>
+            <td>
+                <a id="delete-btn" class="btn btn-sm btn-danger" onclick="deleteItem({{id}})">
+                    Delete
+                </a>
+            </td>
         </tr>
     {{/items}}
     </tbody>
 </table>
+
+<form method="post" class="form-inline mt-5">
+    <h2>Create product</h2>
+    <div class="form-floating mb-2">
+        <input name="name" class="form-control" required/>
+        <label>Name</label>
+    </div>
+    <div class="form-floating mb-2">
+        <input name="brand" class="form-control" required/>
+        <label>Brand</label>
+    </div>
+    <div class="form-floating mb-2">
+        <input name="price" type="number" class="form-control" required/>
+        <label>Price</label>
+    </div>
+    <div class="form-floating mb-2">
+        <input name="size" class="form-control" required/>
+        <label>Size</label>
+    </div>
+    <div class="form-floating mb-2">
+        <input name="color" class="form-control" required/>
+        <label>Color</label>
+    </div>
+    <div class="form-floating mb-2">
+        <input name="category" class="form-control" required/>
+        <label>Category</label>
+    </div>
+
+    <input type="submit" value="Create" class="btn w-100 btn-outline-dark"/>
+</form>
+
+<script type="text/javascript">
+    async function deleteItem(id) {
+        try  {
+            let confirmedDelete = confirm("Are you sure that you want to delete this product?")
+            if (!confirmedDelete) return
+            await fetch(`/products/` + id, {
+                method: "DELETE",
+                headers: { "Accept": "application/json", "Content-Type": "application/json" }
+            });
+            alert("Delete success!")
+            window.location.href = '/products';
+        } catch (error) {
+            console.log(error);
+            alert('Something went wrong!');
+        }
+    }
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 </body>
 </html>
