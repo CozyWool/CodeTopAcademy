@@ -35,22 +35,24 @@ public class ProductController {
         var result = productService.getById(id);
         model.addAttribute("item", result);
         return "getById";
-    }//
-//    @PostMapping
-//    public Product createProduct(@RequestBody Product Product) {
-//        return productService.create(Product);
-//    }
-//
-//
-//    @PutMapping("/{id}")
-//    public Product updateProduct(@PathVariable Long id, @RequestBody Product Product) {
-//        Product.setId(id);
-//        return productService.update(Product);
-//    }
-//
-//
-//    @DeleteMapping("/{id}")
-//    public void deleteProduct(@PathVariable Long id) {
-//        productService.delete(id);
-//    }
+    }
+
+    @PostMapping
+    public String createProduct(@ModelAttribute Product product) {
+        productService.create(product);
+        return "redirect:/products";
+    }
+
+    @PostMapping("/{id}")
+    public String updateProduct(@PathVariable Long id, @ModelAttribute Product product) {
+        product.setId(id);
+        productService.update(product);
+        return "redirect:/products/" + id.toString();
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteProduct(@PathVariable Long id) {
+        productService.delete(id);
+        return "redirect:/products";
+    }
 }
