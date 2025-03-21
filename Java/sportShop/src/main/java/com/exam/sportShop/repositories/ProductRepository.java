@@ -9,5 +9,6 @@ import java.util.List;
 
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {
-
+    @Query("SELECT p FROM Product p ORDER BY p.id ASC")
+    List<Product> findAllSortById();
 }
