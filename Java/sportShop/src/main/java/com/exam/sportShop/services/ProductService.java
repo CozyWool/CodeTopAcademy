@@ -18,7 +18,8 @@ public class ProductService {
     }
 
     public List<Product> getProducts() {
-        return productRepository.findAll().stream().sorted((o1, o2) -> Math.toIntExact(o1.getId() - o2.getId())).toList();
+        return productRepository.findAllSortById();
+//        return productRepository.findAll().stream().sorted((o1, o2) -> Math.toIntExact(o1.getId() - o2.getId())).toList();
     }
 
     public List<Product> getProducts(String title, String brand, Long price, String size, String color, String category) {
