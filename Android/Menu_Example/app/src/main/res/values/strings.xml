@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Menu_Example</string>
+    <string name="settings">Settings</string>
+    <string name="save">Save</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="submenu1">Sub menu 1\n</string>
+    <string name="submenu2">Sub menu 2\n</string>
+    <string name="submenu3">Sub menu 3</string>
+    <string name="wifi_summary">Enable Wi-Fi</string>
+    <string name="wifi_title">Wi-Fi</string>
+    <string name="hint_title">Hints</string>
+    <string name="hint_summary">Show hints</string>
+</resources>

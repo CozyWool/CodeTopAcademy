@@ -53,9 +53,9 @@ public class DatabaseManager extends SQLiteOpenHelper {
         db.close();
     }
 
-    public List<PhoneModel> select() {
+    public List<PhoneItem> select() {
         var db = this.getWritableDatabase();
-        List<PhoneModel> phoneModels = new ArrayList<PhoneModel>();
+        List<PhoneItem> phoneItems = new ArrayList<>();
         try (var cursor = db.query(table_name,
                 new String[]{"id", "name", "phone"},
                 null,
@@ -64,16 +64,24 @@ public class DatabaseManager extends SQLiteOpenHelper {
                 null,
                 null)) {
             while (cursor.moveToNext()) {
-                var item = new PhoneModel();
+                var item = new PhoneItem();
                 item.setId(cursor.getInt(0));
                 item.setName(cursor.getString(1));
                 item.setPhone(cursor.getString(2));
-                phoneModels.add(item);
+                phoneItems.add(item);
             }
         }
         db.close();
-        return phoneModels;
+        return phoneItems;
     }
 
 
+        public void update(PhoneItem item) {
+        var db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put("id", item.getId());
+        values.put("name", item.getName());
+        values.put("phone", item.getPhone());
+        db.update(table_name, values, "id = ?", new String[]{item.getId().toString()});
+    }
 }

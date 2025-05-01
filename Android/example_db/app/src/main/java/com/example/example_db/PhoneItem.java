@@ -12,6 +12,14 @@ public class PhoneItem implements Serializable {
         this.name = name;
         this.phone = phone;
     }
+    public PhoneItem(String name, String phone) {
+        this.name = name;
+        this.phone = phone;
+    }
+
+    public PhoneItem() {
+        
+    }
 
     public Integer getId() {
         return id;

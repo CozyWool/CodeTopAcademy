@@ -33,12 +33,11 @@ public class AddNewPhoneActivity extends AppCompatActivity {
 
         String nameData = name.getText().toString();
         String phoneData = phone.getText().toString();
-
-        DatabaseManager databaseManager = new DatabaseManager(this, "phonesDb.db", null, 1);
-        databaseManager.add(nameData, phoneData);
-
+        var newItem = new PhoneItem(nameData, phoneData);
 
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        startActivity(intent);
+        intent.putExtra("newItem", newItem);
+        setResult(51, intent);
+        finish();
     }
 }

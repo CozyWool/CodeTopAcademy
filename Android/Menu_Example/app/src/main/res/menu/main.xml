@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        tools:context=".MainActivity">
+    <item
+            android:id="@+id/settings"
+            android:orderInCategory="100"
+            android:title="@string/settings"
+            android:icon="@drawable/ic_action_settings"
+            app:showAsAction="always">
+        <menu>
+            <item
+                    android:id="@+id/submenu1"
+                    android:title="@string/submenu1" />
+            <item
+                    android:id="@+id/submenu2"
+                    android:title="@string/submenu2" />
+            <item
+                    android:id="@+id/submenu3"
+                    android:title="@string/submenu3" />
+        </menu>
+    </item>
+    <item
+            android:id="@+id/open"
+            android:orderInCategory="100"
+            android:title="@string/open"
+            android:icon="@drawable/ic_action_open"
+            app:showAsAction="always">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                        android:id="@+id/submenu4"
+                        android:title="@string/submenu1"
+                        android:checked="true" />
+                <item
+                        android:id="@+id/submenu5"
+                        android:title="@string/submenu2"/>
+                <item
+                        android:id="@+id/submenu6"
+                        android:title="@string/submenu3" />
+            </group>
+        </menu>
+    </item>
+    <item
+            android:id="@+id/save"
+            android:orderInCategory="100"
+            android:title="@string/save"
+            android:icon="@drawable/ic_action_save"
+            app:showAsAction="always" />
+    <item
+            android:id="@+id/close"
+            android:orderInCategory="100"
+            android:title="@string/close"
+            android:icon="@drawable/ic_action_exit"
+            app:showAsAction="always" />
+</menu>
