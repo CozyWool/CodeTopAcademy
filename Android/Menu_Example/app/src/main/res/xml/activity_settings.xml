@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory android:title="Wi-Fi &amp; Hints">
+        <CheckBoxPreference
+                android:key="wifi"
+                android:summary="@string/wifi_summary"
+                android:title="@string/wifi_title"
+                android:defaultValue="true" />
+        <CheckBoxPreference
+                android:key="hint"
+                android:summary="@string/hint_summary"
+                android:title="@string/hint_title"
+                android:defaultValue="true" />
+    </PreferenceCategory>
+
+    <PreferenceCategory android:title="Font settings">
+        <EditTextPreference
+                android:key="test_size"
+                android:title="Font size"
+                android:summary="Sets new font size"
+                android:defaultValue="14"
+                android:dialogTitle="Enter font size (from 10 to 32)" />
+        <ListPreference
+                android:key="test_style"
+                android:title="Font style"
+                android:summary="Sets font style"
+                android:defaultValue="1"
+                android:entries="@array/text_style"
+                android:entryValues="@array/text_style"
+                android:dialogTitle="Choose font style" />
+    </PreferenceCategory>
+
+    <com.example.menu_example.CustomPreferenceCategory android:title="My Custom category">
+        <CheckBoxPreference
+                android:key="test_checkbox"
+                android:summary="This is test checkbox"
+                android:title="Test checkbox"
+                android:defaultValue="true" />
+    </com.example.menu_example.CustomPreferenceCategory>
+
+    <PreferenceCategory android:title="Гладить">
+        <SwitchPreference
+                android:key="glad"
+                android:summaryOff="Вы уверены, что не будете гладить кота?"
+                android:summaryOn="Гладить кота?"
+                android:switchTextOff="No"
+                android:switchTextOn="Yes" />
+    </PreferenceCategory>
+
+</PreferenceScreen>
